@@ -4,8 +4,8 @@
 - Adaptive Stream Title/Game
 - Optimal Chat Replayer
 - User ChatLog pop-ups - Either click on username in chat panel, or find by username / display name clicking button in chat panel header
-- Advanced Chat Settings
-
+- Highly customizable Chat Settings
+- Resizable chat panel
 
 ### Current Message features:
 - Emotes, Bits (all types)
@@ -15,8 +15,10 @@
 - Replies
 - Raiders
 
-### Work-In-Progress:
+### Work-In-Progress (Mostly chat events):
 - Pinned messages/bits
 - Announcements
 - Polls
 - Predictions
+
+- Description + Modern stream timelapse
