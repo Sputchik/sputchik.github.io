@@ -6,7 +6,7 @@
 - User ChatLog pop-ups - Either click on username in chat panel, or find by username / display name clicking button in chat panel header
 - Highly customizable Chat Settings
 - Resizable chat panel
-- Pinned bits
+- Pinned bits, messages
 
 ### Current Message features:
 - Emotes, Bits (all types)
@@ -17,7 +17,6 @@
 - Raiders
 
 ### Work-In-Progress (Mostly chat events):
-- Pinned messages
 - Polls
 - Predictions
 

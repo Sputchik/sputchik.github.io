@@ -1,1 +1,763 @@
-﻿<!DOCTYPE html><html lang="en"><meta charset="UTF-8"><script>if (!new URLSearchParams(window.location.search).get('id')) window.location.replace('https://archive.org/details/@sputchik?sort=-date');</script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Twitch VOD Viewer</title><style>:root{--bg-color:#f8f8f8;--scrollbar-bg:#f0f0f0;--scrollbar-thumb:#c1c1c1;--scrollbar-thumb-hover:#a1a1a1;--text-color:#333;--panel-bg:#fff;--panel-border:#ddd;--chat-border:#eee;--timestamp-color:#999;--game-name-color:#555;--resize-handle:#ddd;--resize-handle-hover:#6441a5;--chat-header-bg:#f4f4f4;--viewer-icon-color:#971311;--accent-color:#6741a5;--sub-color:#8b04c1;--cheer-gradient-left:#00000021;--cheer-gradient-right:#00000030;--cheer-clicked-bg:#33333390}[data-theme=dark]{--bg-color:#000000;--scrollbar-bg:#000000;--scrollbar-thumb:#222222;--scrollbar-thumb-hover:#6441a5;--text-color:#e5e5e5;--panel-bg:#0f0f0f;--panel-border:#333;--chat-border:#1f1f1f;--timestamp-color:#888;--game-name-color:#aaa;--resize-handle:#333333;--resize-handle-hover:#6441a5;--chat-header-bg:#000000;--viewer-icon-color:#ff6b68;--cheer-gradient-left:#00000029;--cheer-gradient-right:#00000038;--cheer-clicked-bg:#00000090}*{scrollbar-width:thin;scrollbar-color:var(--scrollbar-thumb) var(--scrollbar-bg)}a{color:inherit;text-decoration:none}a:focus,a:hover{text-decoration:underline}body{font-family:Arial,sans-serif;font-size:15px;margin:0;padding:0;background:var(--bg-color);color:var(--text-color);overflow-y:hidden}.container{display:flex;flex-direction:row;max-width:100%;height:100dvh}.left-panel{flex:1;min-width:0;padding-left:10px;padding-right:10px;display:flex;flex-direction:column;height:100%;overflow-y:auto;scrollbar-gutter:stable both-edges}.video-container{position:relative;width:100%;padding-top:56.25%;background:#000}#video-player{position:absolute;top:0;left:0;width:100%;height:100%}.stream-info{margin-top:12px;padding:8px;padding-top:8px;background:var(--panel-bg);border-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.1);margin-bottom:13px}.stream-info-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}.stream-title{font-size:1rem;margin:0}.game-name{color:var(--game-name-color);font-size:.8rem}.viewers-count{font-weight:700;margin-right:55px;display:flex;align-items:center}.chat-toggle{background:var(--panel-bg);color:var(--text-color);border:1px solid var(--panel-border);border-radius:4px;padding:8px 15px;cursor:pointer;font-weight:700}.description{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:15px;margin-top:15px;padding:15px;background:var(--panel-bg);border-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.1);overflow-wrap:break-word}.chat-panel{resize:horizontal;min-width:200px;width:380px;background:var(--panel-bg);border-left:1px solid var(--panel-border);display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom);padding-top:env(safe-area-inset-top);position:relative}.chat-header{padding:5px 9px;border-bottom:1px solid var(--panel-border);font-weight:700;background:var(--chat-header-bg);display:flex;justify-content:space-between;align-items:center}.chat-header-btn{background:0 0;border:none;cursor:pointer;padding:4px;border-radius:4px;color:var(--text-color)}.chat-messages{overflow-y:scroll;padding:10px;flex:1;overflow-y:auto}.chat-messages-panel{display:flex;flex-direction:column;height:100%;overflow:hidden;position:relative}.chat-message{padding:5px 0;border-bottom:1px solid var(--chat-border)}.chat-username{font-weight:700}.chat-text{word-break:break-word}.chat-overlay{position:absolute;top:16px;left:12px;right:12px;background:var(--panel-bg);border:1px solid var(--panel-border);border-radius:10px;padding:10px 12px;box-shadow:0 6px 16px rgba(0,0,0,.18);z-index:2;pointer-events:auto}.timestamp{color:var(--timestamp-color);font-size:.75rem;margin-right:5px}.monet,.poll,.prediction{background-color:var(--panel-bg);border-left:3px solid #6441a5;padding-left:5px}.inraid{background-color:#ffad000f;border-left:3px solid #ff9e27;padding-left:5px}.mod{background-color:#ff00000a;border-left:3px solid red;padding-left:5px;font-style:italic}@media (orientation:portrait){.container{position:relative;display:grid;grid-template-areas:"video" "info" "chat";grid-template-rows:auto auto 1fr;height:100dvh}.left-panel{display:contents;height:auto;padding:10px}.video-container{grid-area:video}.stream-info{grid-area:info;margin-bottom:0}#chat-panel{grid-area:chat;position:relative;width:100%;border-left:none;overflow-y:auto;padding-bottom:env(safe-area-inset-bottom)}.description{position:absolute;top:100dvh;left:0;right:0}#resize-handle{display:none}.viewers-count{margin-right:5px}}.resize-handle{width:5px;background-color:var(--resize-handle);cursor:col-resize}.resize-handle.active,.resize-handle:hover{transition:background-color .2s;background-color:var(--resize-handle-hover)}.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);display:flex;justify-content:center;align-items:center}.settings-panel{background:var(--panel-bg);border:1px solid var(--panel-border);border-radius:4px;padding:20px;min-width:300px;width:40vw;max-width:80vw;max-height:80vh;height:75%;overflow-y:auto;color:var(--text-color);box-shadow:0 1px 3px rgba(0,0,0,.1);z-index:2}.progress-bar{width:100%;background:var(--panel-border);border-radius:4px;margin-top:5px;padding:2px;font-size:12px;text-align:center;color:var(--bg-color);display:none}.popout{position:absolute;top:100px;left:100px;width:350px;height:400px;max-width:80vw;max-height:80vh;background-color:var(--bg-color);border:1px solid var(--panel-border);border-radius:4px;z-index:10;display:flex;flex-direction:column;resize:both;overflow:auto}.scroll-bottom-btn{position:absolute;bottom:4%;left:50%;transform:translateX(-50%);display:none;z-index:3;width:50%;height:fit-content;min-height:33px;border-radius:8px;border-color:var(--panel-border);background-color:var(--bg-color);color:var(--text-color)}.pinned-bits-container{display:flex;flex-direction:column;position:absolute;gap:10px;top:10px;left:11px;right:15px}.pinned-bits-placeholder{display:flex;max-width:100%;gap:5px;overflow-x:auto;overflow-y:hidden;white-space:nowrap;scrollbar-width:none;touch-action:pan-x;-ms-overflow-style:none}.pinned-bits-placeholder::-webkit-scrollbar{display:none;width:0;height:0}.pinned-cheer{min-width:87px;height:41px;border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;overflow:hidden;cursor:pointer}.pinned-cheer-inner{background:linear-gradient(to right,var(--cheer-gradient-left),var(--cheer-gradient-right));width:92%;height:83%;display:flex;justify-content:center;align-items:center;border-radius:3px;position:absolute;z-index:0;overflow:hidden}.sweep{position:absolute;top:0;left:0;height:100%;width:100%;background:var(--cheer-gradient-right);transform:translateX(-100%);z-index:0}.pinned-bits-details{display:flex;flex-direction:column;border-radius:5px;gap:2px}@keyframes pinnedBitsSweep{0%{transform:translateX(-100%)}100%{transform:translateX(0)}}.pinned-cheer-colors-level-one{background:linear-gradient(90deg,#9146ff,#8205b4)}.pinned-cheer-colors-level-two{background:linear-gradient(90deg,#578fff,#1e69ff)}.pinned-cheer-colors-level-three{background:linear-gradient(90deg,#00bba4,#009919)}.pinned-cheer-colors-level-four{background:linear-gradient(90deg,#ffff75,#fdb210,#ff6905)}.pinned-cheer-colors-level-five{background:linear-gradient(90deg,#f093f9,#fa1ed2,#f7262c)}.pinned-cheer-colors-level-six{background:linear-gradient(90deg,#fa1ed2,#9146ff,#1e69ff,#00c8af)}.pinned-cheer-colors-level-seven{background:linear-gradient(90deg,#fafa19,#fdb210,#ea7078,#fa1ed2,#9146ff,#1e69ff)}.pinned-cheer-colors-level-eight{background:linear-gradient(90deg,#ffb800,#beff00,#00fafa,#9146ff,#fa1ed2)}</style><div class="container"><div class="left-panel"><div class="video-container"><video id="video-player" webkit-playsinline="true" playsinline="true" controls preload="auto">Your browser does not support the video tag.</video></div><div class="stream-info"><div class="stream-info-header"><div><h1 class="stream-title" id="stream-title">Loading...</h1><div style="display:flex;align-items:center;gap:7px;margin-top:9px"><svg fill="var(--game-name-color)" width="16" height="16" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg" id="memory-gamepad-center"><path d="M14 1V2H15V7H20V8H21V14H20V15H15V20H14V21H8V20H7V15H2V14H1V8H2V7H7V2H8V1H14M13 8H9V9H8V13H9V14H13V13H14V9H13V8Z"/></svg><span class="game-name" id="game-name">Loading...</span></div></div><div style="display:flex;align-items:center"><span class="viewers-count" style="gap:3px;display:flex;align-items:center;color:var(--viewer-icon-color)"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M5 7a5 5 0 1 1 6.192 4.857A2 2 0 0 0 13 13h1a3 3 0 0 1 3 3v2h-2v-2a1 1 0 0 0-1-1h-1a3.99 3.99 0 0 1-3-1.354A3.99 3.99 0 0 1 7 15H6a1 1 0 0 0-1 1v2H3v-2a3 3 0 0 1 3-3h1a2 2 0 0 0 1.808-1.143A5.002 5.002 0 0 1 5 7zm5 3a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" clip-rule="evenodd"></path></svg><span id="viewer-count">0</span></span><button class="theme-toggle" id="theme-toggle-btn" style="margin-left:8px;background:var(--panel-bg);color:var(--text-color);border:1px solid var(--panel-border);border-radius:4px;padding:8px 15px;cursor:pointer"><svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" style="vertical-align:text-bottom"><path id="moon-icon" fill="currentColor" d="M21.53 15.93c-.16-.27-.61-.69-1.73-.49a8.46 8.46 0 01-1.88.13 8.409 8.409 0 01-5.91-2.82 8.068 8.068 0 01-1.44-8.66c.44-1.01.13-1.54-.09-1.76s-.77-.55-1.83-.11a10.318 10.318 0 00-6.32 10.21 10.475 10.475 0 007.04 8.99 10 10 0 002.89.55c.16.01.32.02.48.02a10.5 10.5 0 008.47-4.27c.67-.93.49-1.519.32-1.79z" style="display:none"/><path id="sun-icon" fill="currentColor" d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg></button></div></div></div><div class="description" id="description-container" style="display:none"><details><summary></summary><div id="description-content">Loading...</div></details></div></div><div class="resize-handle" id="resize-handle"></div><div class="chat-panel" id="chat-panel"><div class="chat-header"><span>Chat Replay (WIP)</span><div style="display:flex;gap:5px"><button class="chat-header-btn" title="Found Issue? Report here" id="report-btn"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M17.416 2.62412C17.7607 2.39435 17.8538 1.9287 17.624 1.58405C17.3943 1.23941 16.9286 1.14628 16.584 1.37604L13.6687 3.31955C13.1527 3.11343 12.5897 3.00006 12.0001 3.00006C11.4105 3.00006 10.8474 3.11345 10.3314 3.31962L7.41603 1.37604C7.07138 1.14628 6.60573 1.23941 6.37596 1.58405C6.1462 1.9287 6.23933 2.39435 6.58397 2.62412L8.9437 4.19727C8.24831 4.84109 7.75664 5.70181 7.57617 6.6719C8.01128 6.55973 8.46749 6.50006 8.93763 6.50006H15.0626C15.5328 6.50006 15.989 6.55973 16.4241 6.6719C16.2436 5.70176 15.7519 4.841 15.0564 4.19717L17.416 2.62412Z"/><path fill="currentColor" d="M1.25 14.0001C1.25 13.5859 1.58579 13.2501 2 13.2501H5V11.9376C5 11.1019 5.26034 10.327 5.70435 9.68959L3.22141 8.69624C2.83684 8.54238 2.6498 8.10589 2.80366 7.72131C2.95752 7.33673 3.39401 7.1497 3.77859 7.30356L6.91514 8.55841C7.50624 8.20388 8.19807 8.00006 8.9375 8.00006H15.0625C15.8019 8.00006 16.4938 8.20388 17.0849 8.55841L20.2214 7.30356C20.606 7.1497 21.0425 7.33673 21.1963 7.72131C21.3502 8.10589 21.1632 8.54238 20.7786 8.69624L18.2957 9.68959C18.7397 10.327 19 11.1019 19 11.9376V13.2501H22C22.4142 13.2501 22.75 13.5859 22.75 14.0001C22.75 14.4143 22.4142 14.7501 22 14.7501H19V15.0001C19 16.1808 18.7077 17.2932 18.1915 18.2689L20.7786 19.3039C21.1632 19.4578 21.3502 19.8943 21.1963 20.2789C21.0425 20.6634 20.606 20.8505 20.2214 20.6966L17.3288 19.5394C16.1974 20.8664 14.5789 21.7655 12.75 21.9604V15.0001C12.75 14.5858 12.4142 14.2501 12 14.2501C11.5858 14.2501 11.25 14.5858 11.25 15.0001V21.9604C9.42109 21.7655 7.80265 20.8664 6.67115 19.5394L3.77859 20.6966C3.39401 20.8505 2.95752 20.6634 2.80366 20.2789C2.6498 19.8943 2.83684 19.4578 3.22141 19.3039L5.80852 18.2689C5.29231 17.2932 5 16.1808 5 15.0001V14.7501H2C1.58579 14.7501 1.25 14.4143 1.25 14.0001Z"/></svg></button><button class="chat-header-btn" title="Open user ChatLog by username" id="chatlog-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="none" d="M18.5 19.5L20 21M11 14C7.13401 14 4 17.134 4 21H11M19 17.5C19 18.8807 17.8807 20 16.5 20C15.1193 20 14 18.8807 14 17.5C14 16.1193 15.1193 15 16.5 15C17.8807 15 19 16.1193 19 17.5ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="chat-header-btn" title="Open Settings" id="settings-btn"><svg width="20" height="20" viewBox="0 0 20 20" style="color:var(--text-color)"><path fill="currentColor" d="M10 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path><path fill="currentColor" fill-rule="evenodd" d="M9 2h2a2.01 2.01 0 0 0 1.235 1.855l.53.22a2.01 2.01 0 0 0 2.185-.439l1.414 1.414a2.01 2.01 0 0 0-.439 2.185l.22.53A2.01 2.01 0 0 0 18 9v2a2.01 2.01 0 0 0-1.855 1.235l-.22.53a2.01 2.01 0 0 0 .44 2.185l-1.415 1.414a2.01 2.01 0 0 0-2.184-.439l-.531.22A2.01 2.01 0 0 0 11 18H9a2.01 2.01 0 0 0-1.235-1.854l-.53-.22a2.009 2.009 0 0 0-2.185.438L3.636 14.95a2.009 2.009 0 0 0 .438-2.184l-.22-.531A2.01 2.01 0 0 0 2 11V9c.809 0 1.545-.487 1.854-1.235l.22-.53a2.009 2.009 0 0 0-.438-2.185L5.05 3.636a2.01 2.01 0 0 0 2.185.438l.53-.22A2.01 2.01 0 0 0 9 2zm-4 8 1.464 3.536L10 15l3.535-1.464L15 10l-1.465-3.536L10 5 6.464 6.464 5 10z" clip-rule="evenodd"></path></svg></button></div></div><div class="chat-messages-panel" id="chat-messages-panel"><div class="pinned-bits-container" id="pinned-bits-container"><div class="pinned-bits-placeholder" id="pinned-bits-placeholder"></div></div><div class="chat-messages" id="chat-messages"></div></div></div></div><script>var e=new URLSearchParams(window.location.search),t=e.get("id"),e="true"==e.get("local");t||window.location.replace("https://archive.org/details/@sputchik?sort=-date");let[a,,y]=t.split("-");var t=`https://archive.org/download/${t}/`;let i,l,c,O,v=(O=e?(e=window.location.origin,i=`${e}/${y}.json`,l=`${e}/${y}-metadata.json`,c=`${e}/${y}.mp4`,`${e}/${y}.tar.gz`):(i=t+y+".json",l=t+y+"-metadata.json",c=t+y+".mp4",`https://corsproxy.io/?url=${t}${y}.tar.gz`),document.getElementById("video-player")),h=document.getElementById("chat-panel"),p=document.getElementById("chat-messages"),j=document.getElementById("viewer-count"),U=document.getElementById("pinned-bits-placeholder"),V=document.getElementById("pinned-bits-container"),J=(U.addEventListener("wheel",e=>{e.preventDefault(),U.scrollLeft+=.2*e.deltaY}),"ontouchstart"in window||0<navigator.maxTouchPoints),G=(v.src=c,e=window.matchMedia("(prefers-color-scheme: dark)").matches,t=localStorage.getItem("theme"),Je(e||!t?e?"dark":"light":t),window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",e=>{Je(e.matches?"dark":"light")}),null),r={t:null,viewers:null,o:null},d=null,X=0,_=null,g=[],b=0,K=!1,s=0,q=null,Q=new Set,m=new Map,Y=new Map,W=null,Z=null,f=100,w=250,ee=5,x=4,k=`image${x}x`,M=!0,$=!0,S=!0,B=!0,I=!1,A=!0,P=3,T=4,u=new Map,F=new Map,te=new Set,oe=new Set;new Set(["msg","monet","inraid","mod","misc"]);let ne=new Map;let ae=["#FF0000","#0000FF","#008000","#B22222","#FF7F50","#9ACD32","#FF4500","#2E8B57","#DAA520","#D2691E","#5F9EA0","#1E90FF","#FF69B4","#8A2BE2","#00FF7F"],C={i:'<path fill="currentColor" fill-rule="evenodd" d="M16 6h2v6h-1v6H3v-6H2V6h2V4.793c0-2.507 3.03-3.762 4.803-1.99.131.131.249.275.352.429L10 4.5l.845-1.268a2.81 2.81 0 0 1 .352-.429C12.969 1.031 16 2.286 16 4.793V6zM6 4.793V6h2.596L7.49 4.341A.814.814 0 0 0 6 4.793zm8 0V6h-2.596l1.106-1.659a.814.814 0 0 1 1.49.451zM16 8v2h-5V8h5zm-1 8v-4h-4v4h4zM9 8v2H4V8h5zm0 4H5v4h4v-4z" clip-rule="evenodd"></path>',reply:'<path fill="currentColor" d="M11 8h2v2h-2V8zM9 8H7v2h2V8z"></path><path fill="currentColor" fill-rule="evenodd" d="m10 18-3-3H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2l-3 3zm-2.172-5L10 15.172 12.172 13H15V5H5v8h2.828z" clip-rule="evenodd"></path>',sub:'<path fill="currentColor" d="M8.944 2.654c.406-.872 1.706-.872 2.112 0l1.754 3.77 4.2.583c.932.13 1.318 1.209.664 1.853l-3.128 3.083.755 4.272c.163.92-.876 1.603-1.722 1.132L10 15.354l-3.579 1.993c-.846.47-1.885-.212-1.722-1.132l.755-4.272L2.326 8.86c-.654-.644-.268-1.723.664-1.853l4.2-.583 1.754-3.77z"></path>',l:'<path fill="currentColor" d="M18 5v8a2 2 0 0 1-2 2H4a2.002 2.002 0 0 1-2-2V5l4 3 4-4 4 4 4-3z" fill-rule="evenodd"></path>',u:'<path fill="currentColor" fill-rule="evenodd" d="m11 14 7 4V2l-7 4H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v4h2v-4h3zm1-6.268 4-2.286v9.108l-4-2.286V7.732zM10 12H4V8h6v4z" clip-rule="evenodd"></path>',bits:'<path fill="currentColor" fill-rule="evenodd" d="m3 12 7-10 7 10-7 6-7-6zm2.678-.338L10 5.487l4.322 6.173-.85.728L10 11l-3.473 1.39-.849-.729z" clip-rule="evenodd"></path>'},re=new Image;re.src="https://static-cdn.jtvnw.net/subs-image-assets/gift-illus.png";let ie="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",o=null,n=document.createElement("button");function E(e,t=20,o=20,n=null,a=null){n=n||t,a=a||o;var r=document.createElementNS("http://www.w3.org/2000/svg","svg");return r.setAttribute("width",t),r.setAttribute("height",o),r.setAttribute("viewBox",`0 0 ${n} `+a),r.style.color="var(--text-color)",r.style=`min-height: ${o}px; min-width: ${t}px;`,r.innerHTML=e,r}function se(e,t=0){var o=e<0,n=o?-e:e,a=Math.floor(n/3600),r=Math.floor(n%3600/60),n=Math.floor(n%60),o=o?"-":"",a=0<a?o+a.toString().padStart(2,"0")+`:${r.toString().padStart(2,"0")}:`+n.toString().padStart(2,"0"):o+r.toString().padStart(2,"0")+":"+n.toString().padStart(2,"0");return t?a+"."+(e%1).toFixed(t).substring(2):a}n.textContent="▼ Scroll to Bottom",n.className="scroll-bottom-btn",n.addEventListener("click",()=>{p.scrollTop=p.scrollHeight}),h.appendChild(n),p.addEventListener("scroll",We);class le{constructor(e,t){this.operationName=e,this.sha256Hash=t,this.extensions={persistedQuery:{version:1,sha256Hash:this.sha256Hash}}}h(e={}){return{operationName:this.operationName,extensions:this.extensions,variables:e}}}class ce extends le{constructor(){super("BitsConfigContext_Global","6a265b86f3be1c8d11bdcf32c183e106028c6171e985cc2584d15f7840f5fee6")}}class de extends le{constructor(){super("StreamMetadata","b57f9b910f8cd1a4659d894fe7550ccc81ec9052c01e438b290fd66a040b9b93")}}class ue extends le{constructor(){super("ChatList_Badges","838a7e0b47c09cac05f93ff081a9ff4f876b68f7624f0fc465fe30031e372fc2")}}class he extends le{constructor(){super("GlobalBadges","9db27e18d61ee393ccfdec8c7d90f14f9a11266298c2e5eb808550b77d7bcdf6")}}let pe=new class{p=new ce;m=new ue;v=new he;g=new de};class z extends Error{constructor(e){super("string"==typeof e?e:JSON.stringify(e)),this.name="RequestError",this.k=e}}let R=new class{constructor(e=30,t=35,o=3e3){this.M=e,this.$=t,this.S=o,this.B=[],this.total=0,this.I=0,this.A=null,this.endpoint="https://gql.twitch.tv/gql",this.headers={"Client-ID":"kimne78kx3ncx6brgo4mv6wki5h1ko","Device-Id":Array(32).fill(0).map(()=>ie.charAt(Math.floor(Math.random()*ie.length))).join(""),"Accept-Language":"en-US"}}async add(t,a=10){for(;0<=a;){let o,n;var e=new Promise((e,t)=>{o=e,n=t}),r=(this.B.push({P:t,resolve:o,reject:n}),this.B.length),i=Date.now();1===r?(this.I=i,this.A=setTimeout(()=>{this.T(),this.M})):(r>=this.$||i-this.I>=this.M)&&(this.A&&(clearTimeout(this.A),this.A=null),this.T());try{return await e}catch(e){if(--a<0)throw r=t.operationName||"unknown",new Error(`Failed to execute operation "${r}" after retries: `+e.message)}}}async T(){if(this.B.length){var o=this.B,t=(this.B=[],this.A&&(clearTimeout(this.A),this.A=null),o.length);this.total+=t;try{console.debug(`Collecting ${t} promises...`);var n=JSON.stringify(o.map(e=>e.P)),a=this.F(n.length),r=Date.now();let e=new AbortController;var i=setTimeout(()=>e.abort(),this.S),s=await fetch(this.endpoint,{method:"POST",headers:{"Content-Type":"application/json",...this.headers},body:n,signal:e.signal});if(clearTimeout(i),!s.ok)throw new Error(`Invalid response status (${s.status})`);var l=await s.text(),c=this.F(l.length),d=JSON.parse(l),u=((Date.now()-r)/1e3).toFixed(2);console.debug(`Collected ${t} promise(s) (${a}) in ${u}s (${c}). Total: `+this.total);for(let e=0;e<o.length;e++){var h,p,m=o[e],v=d[e];v.errors?(h=new z(v.errors),p=m.P.operationName||"Unknown",console.warn(`[${p}] Operation error: `+JSON.stringify(v.errors)),m.reject(h)):m.resolve(v.data||v)}}catch(t){console.error(`Error collecting ${o.length} promises: `+t.message);for(let e=0;e<o.length;e++)o[e].reject(new z(t))}}}F(e){return e<1024?e+" B":e<1048576?(e/1024).toFixed(1)+" KB":(e/1048576).toFixed(1)+" MB"}},me=new class{constructor(e,t,o=1){this.C=e,this.R=t,this.version=o,this.L=null}async init(){return this.L||new Promise((t,o)=>{if(window.indexedDB){let e=indexedDB.open(this.C,this.version);e.onerror=()=>o(e.error),e.onsuccess=()=>{this.L=e.result,t(this.L)},e.onupgradeneeded=e=>{e=e.target.result;e.objectStoreNames.contains(this.R)||e.createObjectStore(this.R,{keyPath:"id"})}}else o(new Error("IndexedDB not supported"))})}async set(n,a){try{return this.L||await this.init(),new Promise((e,t)=>{let o=this.L.transaction([this.R],"readwrite").objectStore(this.R).put({id:n,data:a,timestamp:Date.now()});o.onerror=()=>t(o.error),o.onsuccess=()=>e(!0)})}catch(e){return console.warn("IndexedDB set failed:",e),!1}}async get(n){return this.L||await this.init(),new Promise((t,e)=>{let o=this.L.transaction([this.R],"readonly").objectStore(this.R).get(n);o.onerror=()=>e(o.error),o.onsuccess=()=>{var e=o.result;t(e?e.data:null)}})}async delete(n){try{return this.L||await this.init(),new Promise((e,t)=>{let o=this.L.transaction([this.R],"readwrite").objectStore(this.R).delete(n);o.onerror=()=>t(o.error),o.onsuccess=()=>e(!0)})}catch(e){return console.warn("IndexedDB delete failed:",e),!1}}async D(){try{return this.L||await this.init(),new Promise((e,t)=>{let o=this.L.transaction([this.R],"readwrite").objectStore(this.R).clear();o.onerror=()=>t(o.error),o.onsuccess=()=>e(!0)})}catch(e){return console.warn("IndexedDB deleteAll failed:",e),!1}}},L=new class{constructor(){this.N=new Map,this.H=new Map,this.O=new Map,this.j=null,this.U=null,this.V=[]}J(){for(let e=0,t=b;e<t;e++){var o=g[e];"pin"===o.type&&"pin-message"===o.data.type&&"CHEER"===o.data.data.message.type&&this.V.push(o.data.data)}}G(e){}X(e){}_(e){}K(e){}q(e){}Y(e){}W(e){}Z(e){}ee(e){}te(e){}oe(e){}ne(e){}ae(e){}re(e){}ie(e){}se(){var o=Le();for(let e=0,t=this.V.length;e<t;e++){var n=this.V[e];n.message.starts_at>o||o>n.message.ends_at||this.N.has(n.message.id)||this.le(n)}}ce(){var o,n,a,e=H(),r=d.createdUnix+e;for(let[e,t]of this.N)t.de>r||t.ue<r?this.he(e):(o=t.duration,0<(n=t.ue-r)?(clearTimeout(t.pe),a=o-n,t.me.style.animation=`pinnedBitsSweep ${o}s linear forwards`,t.me.style.animationDelay=`-${a}s`,t.pe=setTimeout(()=>{this.he(e)},1e3*n)):this.he(e))}le(e){var t,o,n,a,r,i,s,l,c,d,u,h,p,e=e.message;let m=e.id;this.N.has(m)||(t=e.sender,p=Le(),o=e.starts_at,(a=e.ends_at)<p)||(p=(n=a-o)-(a=a-p),r=e.metadata.bitsAmount,i=e.metadata.level,h=1e3<=r?Math.floor(r/1e3)+"K":r.toString(),d=t.display_name.slice(0,2),u=E(C.bits,20,20,20,20),(s=document.createElement("div")).className="pinned-cheer pinned-cheer-colors-level-"+i.toLowerCase(),(l=document.createElement("div")).className="pinned-cheer-inner",(c=document.createElement("div")).className="sweep",c.style.animation=`pinnedBitsSweep ${n}s linear forwards`,c.style.animationPlayState=v.paused?"paused":"running",c.style.animationDelay=`-${p}s`,s.appendChild(c),(p=document.createElement("span")).style="color: white; font-weight: 700; display: flex; vertical-align: middle; align-items: center; gap: 1px; position: relative; z-index: 1;",p.appendChild(document.createTextNode(d)),p.appendChild(u),p.appendChild(document.createTextNode(""+h)),l.appendChild(p),s.appendChild(l),U.appendChild(s),d=(e=>{let o=new Map,n=0,t=e.text,a=e.fragments,r=Pe(t);for(let e=0,t=a.length;e<t;e++){var i=a[e],s=n;if(n+=i.text.length,i.emoticon){var l=i.emoticon.emoticonID;let e;o.has(l)?e=o.get(l):(e={id:l,len:i.text.length,pos:[]},o.set(l,e)),e.pos.push(r[s])}}return Array.from(o.values())})(e.content),u=D(e.content.text,d,!0),(h=document.createElement("div")).appendChild(u),p=h.innerHTML,t.badges=(t=>{if(!t||!t.length)return[];var o=t.length,n=new Array(o);for(let e=0;e<o;e++){var a=t[e];n[e]={name:a.id,value:a.version}}return n})(t.badges),t["display-name"]=t.display_name,s.onclick=()=>this.ve(m),s.title=t["display-name"]+" "+r,this.N.set(m,{element:s,me:c,fe:r,level:i,de:o,ue:e.ends_at,duration:n,pe:setTimeout(()=>{this.he(m)},1e3*a),ge:p,sender:t}))}he(e){var t=this.N.get(e);t&&(t.element.remove(),this.N.delete(e))}ve(e){let t=this.N.get(e);if(!t)return;if(this.U){if(this.U.id===e)return;this.U.close()}let o=document.createElement("div");o.className="pinned-bits-details pinned-cheer-colors-level-"+t.level.toLowerCase();var n=N(t.sender,t.sender.chatColor,t.sender.badges),a=document.createElement("div"),r=document.createElement("div");r.appendChild(n),r.style="display: flex; justify-content: space-between; align-items: center; gap: 10px;",r.appendChild(n);let i=document.createElement("span");function s(){var e=t.ue-Le();e<=0?(i.textContent="00:00",clearInterval(l)):i.textContent=se(e)}i.style="font-size: 0.85rem; font-weight: 700; color: var(--text-color);",r.appendChild(i),s();let l=setInterval(s,1e3);a.appendChild(r),a.style="margin: 3px; display: flex; flex-direction: column; gap: 7px; background: var(--panel-bg); border-radius: 5px; padding: 10px;";n=document.createElement("span"),n.className="chat-text",n.innerHTML=t.ge,a.appendChild(n),o.appendChild(a),r=document.createElement("div"),r.style="margin-left: 6px; gap: 1px; display: flex; align-items: center; vertical-align: middle; margin-bottom: 3px; color: black",r.appendChild(E(C.bits,22,22,20,20)),n=document.createElement("span");n.style="font-weight: 700;",n.textContent=t.fe.toString(),r.appendChild(n),o.appendChild(r),V.appendChild(o);let c=t.element.childNodes[1],d=(c.dataset.be=c.style.background,c.style.background="var(--cheer-clicked-bg)",()=>{c.style.background=c.dataset.be,o.remove(),L.U=null,t.element.onclick=()=>this.ve(e)});o.onclick=e=>{d()},this.U={we:o,id:e,close:d},t.element.onclick=()=>d()}xe(){if(this.N)for(var[e,t]of this.N)t.me.style.animationPlayState="paused",clearTimeout(t.pe)}ye(){if(this.N){this.ce();for(var[e,t]of this.N)t.me.style.animationPlayState="running"}}ke(){this.se()}};function ve(e){Z=e;var t=document.createElement("style");t.id="channel-color-style",t.textContent=`.chat-message.monet { border-left-color: ${e} !important; }`,t.parentNode||document.head.appendChild(t)}async function fe(t){try{var o=t.stream(),n=new DecompressionStream("gzip"),a=o.pipeThrough(n),r=await new Response(a).arrayBuffer(),i=new Uint8Array(r),s={};let e=0;for(;e+512<=i.byteLength;){var l=i.slice(e,e+512);if(l.every(e=>0===e))break;var c=l.slice(0,100);let t="";for(let e=0;e<c.length&&0!==c[e];e++)t+=String.fromCharCode(c[e]);var d=String.fromCharCode(l[156]),u=l.slice(124,136);let o="";for(let e=0;e<u.length&&0!==u[e];e++)o+=String.fromCharCode(u[e]);var h=parseInt(o.trim()||"0",8);if(console.log("TAR entry:",t,"type:",d,"size:",h),"0"!==d&&"\0"!==d||t.includes("PaxHeader")){var p=Math.ceil(h/512);e+=512+512*p}else{if(0<h&&(t.endsWith(".json")||t.endsWith("-metadata.json"))){var m=e+512,v=i.slice(m,m+h);try{var f=new TextDecoder("utf-8").decode(v),g=JSON.parse(f);s[t]=g,console.log("Extracted:",t,"size:",R.F(h))}catch(e){console.warn("Failed to parse JSON for",t,":",e)}}var b=Math.ceil(h/512);e+=512+512*b}}var w=y+"-metadata.json",x=y+".json";return(console.log("Available files:",Object.keys(s)),s[w]&&s[x])?(console.log("Successfully extracted both metadata and chat log"),[s[w],s[x]]):(console.warn("Target files not found"),null)}catch(e){return console.error("Failed to parse compressed chat log:",e),null}}async function ge(){if(!K){console.log("Looking for cached chat for stream:",y);var t=async()=>{console.log("Falling back to uncompressed chat log...");var e=fetch(l).then(e=>e.json()).then(e=>{d=e,_=e.owner,Ve(),Ue()}),[,e]=await Promise.all([e,fetch(i)]);g=await e.json()},e=await me.get(y);if(e instanceof Blob)[d,g]=await fe(e),console.log("Chat loaded from IndexedDB cache");else{console.log("No cached chat found, trying compressed chat log first...");try{var o,n,a=await fetch(O);200===a.status&&(n=await fe(o=await a.blob()))instanceof Array?([d,g]=n,await me.set(y,o),console.log("Chat cached in IndexedDB for future use")):await t()}catch(e){console.warn("Failed to fetch compressed chat log:",e),await t()}if(!Array.isArray(g))return void console.error("Failed to load chat log from any source")}K=!0,b=g.length,console.log("Chat loaded with",b,"messages"),_=d.owner,Ve(),Ue(),d.accentColor&&ve(d.accentColor),X=d.videoOffset||0,L.J()}}function be(e){return`https://static-cdn.jtvnw.net/emoticons/v2/${e}/default/dark/${P}.0`}function we(t){if(t&&t.length){let e=t.length;for(;e--;)(e=>{var t;te.has(e)||(te.add(e),(t=new Image).src=be(e),t.onerror=()=>{console.warn("Failed to load emote:",e),te.delete(e)})})(t[e].id)}}function xe(t){if(t&&t.length){let e=t.length;for(;e--;){var o=t[e];(e=>{var t,o;oe.has(e)||((t=F.get(e)||u.get(e))?((o=new Image).src=t[k],o.onerror=()=>{console.warn("Failed to load badge:",e)},o.onload=()=>{oe.add(e)}):console.warn("Unknown badge ID:",e))})(""+o.name+o.value)}}}function ye(){if(K){var t=g[s].offset+ee;let e=s;for(;e<b&&g[e].offset<t;){var o=g[e];we(o.data.emotes),xe(o.data.badges),o.data.user&&!o.data.color&&(o=o.data.user.login,ne.has(o)||Te(o)),e++}}}function ke(e,t,o,n,a){let r={PREFIX:e.toLowerCase(),BACKGROUND:t,ANIMATION:o?"animated":"static",TIER:n,SCALE:a,EXTENSION:o?"gif":"png"};return q.replace(/\b(PREFIX|BACKGROUND|ANIMATION|TIER|SCALE|EXTENSION)\b/g,e=>r[e])}function Me(a=null){if(null===q)console.warn("Bits template URL not set");else{let o=0,n=0;for(var[,e]of m.entries())o+=e.length;a&&a(n,o);for(var[r,i]of m.entries()){let t=i.length;for(;t--;){var s=i[t];let e=ke(r,"dark",!0,s,T);s=new Image;s.onload=()=>{n++,a&&a(n,o)},s.onerror=()=>{console.warn("Failed to preload bits image:",e),n++,a&&a(n,o)},s.src=e}}}}function $e(e=null){var o,t=Array.from(u.values()),n=Array.from(F.values());let a=t.length+n.length,r=0,i=(e&&e(r,a),()=>{r++,e&&e(r,a)});for(o of[t,n]){let t=o.length;for(;t--;){var s=o[t];let e=""+s.setID+s.version;var l=new Image;l.onload=i,l.onerror=()=>{console.warn("Failed to preload badge:",e),i()},l.src=s[k]}}}function Se(){var t=new Set;let e=g.length;for(;e--;){var o=g[e].data.emotes;if(o){let e=o.length;for(;e--;)t.add(o[e].id)}}return t}function Be(t=null){var o=Se();let n=o.size,a=0;t&&t(a,n);for(let e of o){var r=new Image;r.onload=()=>{a++,t&&t(a,n)},r.onerror=()=>{console.warn("Failed to preload emote:",e),a++,t&&t(a,n)},r.src=be(e)}}function Ie(t=null){let e,o,n=0,a=0,r=0,i=0;var s,l;e=Se().size,o=u.size+F.size;for([s,l]of m.entries())n+=l.length;let c=e+o+n,d=()=>{var e=a+r+i;t&&t(e,c)};Be((e,t)=>{a=e,d()}),$e((e,t)=>{r=e,d()}),Me((e,t)=>{i=e,d()})}function Ae(e,t,o){e.querySelector(t).addEventListener("click",function(){let i=this;var e;i.dataset.Me=i.style.color||"",i.style.color="#FFFFFF",(e=i).disabled=!0,e.dataset.$e=e.textContent,e.dataset.Se=e.style.backgroundColor||"",o((e,t)=>{var o,n,a,r;o=i,r=e,a=0<(n=t)?Math.round(r/n*100):0,o.textContent=r+`/${n} (${a}%)`,o.style.background=`linear-gradient(to right, var(--accent-color, #9147ff) ${a}%, var(--panel-border) ${a}%)`,t<=e&&((r=i).disabled=!1,r.style.backgroundImage="",r.textContent=r.dataset.$e,r.style.backgroundColor=r.dataset.Se||"var(--panel-border)",r.style.color=r.dataset.Me||"var(--text-color)")})})}function Pe(e){var t,o=[0];let n=0;for(t of e)n+=t.length,o.push(n);return o}function D(n,e,t=!1){if(!(e&&e.length||t))return document.createTextNode(n);var o,a=[];if(e){let o=Pe(n);a.push(...e.flatMap(t=>t.pos.map(e=>({Be:!1,start:o[e],end:o[e+t.len],id:t.id}))))}if(t&&W)for(W.lastIndex=0;null!==(o=W.exec(n));)a.push({Be:!0,start:o.index,end:o.index+o[0].length,Ie:o[1],fe:parseInt(o[2],10)});a.sort((e,t)=>e.start-t.start);var r=document.createDocumentFragment();let i=0;for(let e=0,t=a.length;e<t;e++){var s=a[e],l=(s.start>i&&(l=n.substring(i,s.start),r.appendChild(document.createTextNode(l))),document.createElement("img"));if(l.onerror=function(){this.replaceWith(document.createTextNode(this.alt))},s.Be){var c=m.get(s.Ie.toLowerCase());let t=1;if(c){let e=c.length;for(;e--;)if(s.fe>=c[e]){t=c[e];break}}var d=document.createElement("span"),u=(d.className="bits-container",d.style="display: inline-flex; align-items: center; vertical-align: middle; gap: 4px; margin-left: 2px; margin-right: 2px;",l.src=ke(s.Ie,"dark",!0,t,T),l.title=l.alt=""+s.Ie+s.fe,l.style="height: 1.6rem; width: auto; vertical-align: middle;",document.createElement("span"));u.textContent=s.fe.toString(),u.style=`font-weight: bold; color: ${Y.get(t)};`,d.appendChild(l),d.appendChild(u),r.appendChild(d)}else l.src=be(s.id),l.title=l.alt=n.substring(s.start,s.end),l.style.cssText="height: 1.6rem; width: auto; vertical-align: middle;",r.appendChild(l);i=s.end}return i<n.length&&(e=n.substring(i),r.appendChild(document.createTextNode(e))),r}function Te(e){var t=e.toString().split("").reduce((e,t)=>(e<<5)-e+t.charCodeAt(0)|0,0),t=Math.abs(t)%ae.length,t=ae[t];return ne.set(e,t),t}function Fe(e){return ne.get(e)||Te(e)}function N(t,e,o=null){var n=document.createElement("span"),a=(n.className="chat-username",t.login||t["display-name"]),e=e||Fe(a);if(n.style=`color: ${e}; cursor: pointer;`,n.textContent=t["display-name"]||a,n.onclick=e=>Xe(t,e),!B||!o||!o.length)return n;var r,e=document.createElement("span"),i=document.createElement("span");i.style="margin-right: 4px;";for(r of o){var s,l=""+r.name+r.value,c=F.get(l)||u.get(l);c?((s=document.createElement("img")).src=c[k],s.style="height: 1.0rem; width: auto; vertical-align: middle; margin-right: 4px;",s.title=s.alt=c.title,i.appendChild(s)):console.warn("Badge not found: "+l)}return e.appendChild(i),e.appendChild(n),e}function Ce(e){var t,o=e.type,n=e.data,a=document.createElement("div");a.className="chat-message "+o,a.id=n.id||0,M&&((t=document.createElement("span")).className="timestamp",t.textContent=se(e.offset-X),a.appendChild(t));let r,i;switch(o){case"msg":i=N(n.user,n.color,n.badges);var s=document.createElement("span");if(s.className="chat-text",s.textContent=": ","reply"===(r=n["msg-id"])){var l=E(C.reply,18,18),c=(l.style.color="var(--timestamp-color)",document.createElement("div")),l=(c.style="display: flex; gap: 5px; margin-bottom: 2px; align-items: center;",c.appendChild(l),n.reply["parent-msg-body"]),d=n.reply["parent-display-name"],l=`Replying to @${d}: `+l;let o=n.reply["parent-msg-id"];var u=document.createElement("a"),l=(u.onclick=e=>{e.preventDefault();let t=p.querySelector(`.chat-message[id="${o}"]`);t&&(t.scrollIntoView(),t.style.backgroundColor="rgba(255,255,0,0.3)",setTimeout(()=>t.style.backgroundColor="",200))},u.textContent=l,u.style="color: var(--timestamp-color);",c.appendChild(u),a.appendChild(c),D(n.text,n.emotes)),u=(s.appendChild(l),`@${d} `),c=s.childNodes[1];return c&&c.nodeType===Node.TEXT_NODE&&c.nodeValue.startsWith(u)&&(c.nodeValue=c.nodeValue.slice(u.length)),a.appendChild(i),a.appendChild(s),a}s.appendChild(D(n.text,n.emotes)),a.appendChild(i),a.appendChild(s);break;case"monet":if("bits"===(r=n["msg-id"])){a.className="chat-message msg";l=document.createElement("span"),d=(l.className="chat-text",l.textContent=": ",D(n.text,n.emotes,!0));l.appendChild(d),a.appendChild(N(n.user,n.color,n.badges)),a.appendChild(l)}else{if(!S)return;i=N(n.user,"var(--sub-color)",null);var c=n.user["display-name"]||n.user.login,u=document.createElement("span");u.className="chat-text",u.style.fontSize="0.9rem";let o=n["system-msg"];if(o.startsWith(c)&&(o=o.substring(c.length).trimStart()),"resub"===r||"sub"===r)return o.startsWith("subscribed")&&(o=o.charAt(0).toUpperCase()+o.slice(1)),u.textContent=" "+o,(s=document.createElement("div")).style="display: flex; flex-direction: column; gap: 2px;",d=document.createElement("div"),(c=E((l="Prime"===n["msg-params"]["sub-plan"])?C.l:C.sub,20,20)).style.color=l?"var(--sub-color)":"var(--game-name-color)",d.style="display: flex; align-items: center; gap: 4px;",u.style.marginLeft="24px",d.appendChild(c),d.appendChild(i),s.appendChild(d),s.appendChild(u),a.appendChild(s),n.text&&((l=document.createElement("div")).style.marginTop="8px",(c=document.createElement("span")).className="chat-text",c.textContent=": ",d=D(n.text,n.emotes),c.appendChild(d),l.appendChild(N(n.user,n.color,n.badges)),l.appendChild(c),a.appendChild(l)),a;if("submysterygift"===r||"subgift"===r){u.textContent=" "+o;var s=document.createElement("div"),d=(s.style="display: flex; align-items: center; gap: 3px;",i.style.fontWeight="bold",document.createElement("div")),c=document.createElement("span");c.className="chat-text";let e=n["system-msg"];l=n.user["display-name"]||n.user.login;e.startsWith(l)&&(e=e.substring(l.length).trimStart()),c.textContent=" "+e,c.style.fontSize="0.9rem";let t;return"submysterygift"===r?((t=document.createElement("img")).src=re.src,t.style="height: 45px; width: auto;",i.style.color=n.color||Fe(n.user.login),d.style="display: flex; flex-direction: column;"):(t=E(C.i),i.style.color="var(--text-color)",d.style.marginLeft="4px"),d.appendChild(i),d.appendChild(c),s.appendChild(t),s.appendChild(d),a.appendChild(s),a}u.textContent=" "+o,a.appendChild(i),a.appendChild(u),n.text&&((l=document.createElement("div")).style.marginTop="4px",c=N(n.user,n.color,n.badges),(d=document.createElement("span")).className="chat-text",d.textContent=": ",s=D(n.text,n.emotes),d.appendChild(s),l.appendChild(c),l.appendChild(d),a.appendChild(l))}break;case"inraid":i=N(n.user,"#ff8b38",n.badges);u=document.createElement("span");u.className="chat-text",u.textContent=` is raiding with a party of ${n["msg-params"].viewerCount} viewers`,a.appendChild(i),a.appendChild(u);break;case"mod":if(!$)return;s=document.createElement("span");if(s.className="chat-text","ban"===n["msg-id"])i=N(n["target-user"],"var(--text-color)",null),a.appendChild(i),s.style.color="var(--text-color)",s.textContent=" was banned",n["ban-duration"]&&(s.textContent+=` for ${n["ban-duration"]} seconds`);else if("clear-msg"===n["msg-id"]){let t=p.querySelector(`.chat-message[id="${n["target-msg-id"]}"]`);if(!t)return;c=t.querySelector(".chat-text"),d=(c&&(c.style.opacity="0.7"),document.createElement("a"));d.href="#"+t.id,d.textContent="message deleted",d.style="cursor: pointer; margin-left: 5px; color: #999;",d.addEventListener("click",e=>{e.preventDefault(),t.scrollIntoView(),t.style.backgroundColor="rgba(255,255,0,0.3)",setTimeout(()=>t.style.backgroundColor="",200)}),s.appendChild(d)}else s.textContent="Moderation action";a.appendChild(s);break;case"poll":case"prediction":l=document.createElement("div");l.style.fontWeight="bold",l.textContent=o.charAt(0).toUpperCase()+o.slice(1)+": ","poll"===o&&n.data&&n.data.poll?l.textContent+=n.data.poll.title||"":"prediction"===o&&n.data&&n.data.event&&(l.textContent+=n.data.event.title||""),a.appendChild(l);break;case"pin":return A&&"pin-message"===n.type&&"CHEER"===n.data.message.type?void L.le(n.data):void 0;default:u=document.createElement("span");u.className="chat-text",u.textContent=`[${o}] Event`,a.appendChild(u)}return a}function Ee(){if(K&&b){var e=H();let t=s;for(;t<g.length&&g[t].offset<=e;)t++;if(t>s){var o=document.createDocumentFragment();for(let e=s;e<t;e++){var n=Ce(g[e]);n&&o.appendChild(n)}var a,r=p.scrollHeight-p.clientHeight<=p.scrollTop+100,i=(p.appendChild(o),s=t,p.children);i.length>w&&((a=document.createRange()).setStart(p,0),a.setEnd(p,i.length-w),a.deleteContents()),(r?Ye:We)()}}}function ze(){s=s>=w?s-w:0,p.innerHTML="",Ee()}function Re(){let o=document.querySelector(".container"),n=document.getElementById("resize-handle"),a,r,i,s=!1;var e;function t(e){s=!0;var t=e.touches[0];a=t.clientX,r=h.offsetWidth,i=o.offsetWidth,document.addEventListener("touchmove",c,{passive:!1}),document.addEventListener("touchend",u),document.addEventListener("touchcancel",u),n.classList.add("active"),document.body.style.userSelect="none",e.preventDefault()}function l(e){s&&(e=e.clientX-a,e=Math.max(200,Math.min(i-200,r-e)),h.style.width=e+"px")}function c(e){var t;s&&(t=e.touches[0].clientX-a,t=Math.max(200,Math.min(i-200,r-t)),h.style.width=t+"px",e.preventDefault())}function d(){s&&(s=!1,document.removeEventListener("mousemove",l),document.removeEventListener("mouseup",d),n.classList.remove("active"),document.body.style.userSelect="",Ye())}function u(){s&&(s=!1,document.removeEventListener("touchmove",c),document.removeEventListener("touchend",u),document.removeEventListener("touchcancel",u),n.classList.remove("active"),document.body.style.userSelect="",Ye())}J&&((e=document.createElement("div")).style.cssText=` position: absolute; top: -15px; bottom: -15px; left: -15px; right: -15px; z-index: 1; touch-action: none; `,n.style.position="relative",n.appendChild(e),e.addEventListener("touchstart",t,{passive:!1})),n.addEventListener("mousedown",function(e){s=!0,a=e.clientX,r=h.offsetWidth,i=o.offsetWidth,document.addEventListener("mousemove",l),document.addEventListener("mouseup",d),n.classList.add("active"),document.body.style.userSelect="none",e.preventDefault()}),n.addEventListener("touchstart",t,{passive:!1})}function H(){return X+v.currentTime}function Le(){return d.createdUnix+H()}function De(){var e,t;v.paused||(t=(t=>{let o=1/0;var n=d.titles,a=d.games;if(n&&n.length)for(let e=0;e<n.length;e++){var[r,,]=n[e];t<r&&r<o&&(o=r)}if(a&&a.length)for(let e=0;e<a.length;e++){var[i,,]=a[e];t<i&&i<o&&(o=i)}return o===1/0?null:o})(e=H()),r.t&&(clearTimeout(r.t),r.t=null),t&&(t=1e3*(t-e)/v.playbackRate+50,r.t=setTimeout(()=>{Ve(),De()},t)))}function Ne(){if(!v.paused){var o,n,a=H();n=a;let[e,t]=(o=d.viewers)&&o.length?0<=(n=je(n))&&n<o.length-1?[n+1,o[n+1][0]]:[0,o[0][0]]:null;r.viewers&&(clearTimeout(r.viewers),r.viewers=null),t&&(n=1e3*(t-a)/v.playbackRate,r.viewers=setTimeout(()=>{Ue(index=e),Ne()},n))}}function He(){De(),Ne(),function e(){v.paused||(r.o&&(clearTimeout(r.o),r.o=null),r.o=setTimeout(()=>{ye(),e()},800*ee))}()}function Oe(){for(var e in r)r[e]&&(clearTimeout(r[e]),r[e]=null)}function je(o){var n=d.viewers;if(!n.length||o<n[0][0])return-1;var a,r,e=Math.floor(o/30),i=Math.max(0,e-3),s=Math.min(n.length-1,e+3);let l=-1,c=-1;for(let e=i;e<=s;e++){var[t,,]=n[e];t<=o&&t>c&&(c=t,l=e)}if(-1===l)for(let e=0,t=n.length;e<t;e++)e>=i&&e<=s||([a,r]=n[e],a<=o&&a>c&&(c=a,l=e));return l}function Ue(e=null){e=e||je(H()),e=0<=e?d.viewers[e][1]:0;j.textContent=e.toLocaleString()}function Ve(){var o=Math.ceil(H()),n=d.titles,a=d.games;if(n&&n.length){let t=n[0][1];for(let e=n.length-1;0<=e;e--){var[r,i]=n[e];if(r<=o){t=i;break}}document.querySelector(".stream-title").textContent=t,document.title=t+" - "+_.displayName}if(a&&a.length){let t=a[0][1]||"";for(let e=a.length-1;0<=e;e--){var[s,l]=a[e];if(s<=o){t="object"==typeof l?l.name:l;break}}document.getElementById("game-name").textContent=t}}function Je(e){document.documentElement.setAttribute("data-theme",e),localStorage.setItem("theme",e),document.getElementById("moon-icon").style.display="light"===e?"none":"block",document.getElementById("sun-icon").style.display="light"===e?"block":"none"}function Ge(){Je("light"===(localStorage.getItem("theme")||"light")?"dark":"light")}function Xe(e,c=null){let d=e.id.toString();var e=e["display-name"]||e.login,u=document.getElementById("user-chat-window-"+d);if(!u){let r=document.createElement("div");r.id="user-chat-window-"+d,r.className="popout";u=document.createElement("div"),e=(u.style.cssText=` padding: 5px; cursor: move; background-color: var(--panel-border); color: var(--text-color); border-bottom: 1px solid var(--panel-border); display: flex; justify-content: space-between; align-items: center; z-index: 11; `,u.textContent="Chat History for "+e,document.createElement("button"));e.textContent="X",e.style.cssText=` background: none; border: none; color: var(--text-color); cursor: pointer; padding: 0 5px; `,e.onmousedown=e=>e.stopPropagation(),e.ontouchstart=e=>e.stopPropagation(),e.onclick=()=>r.remove(),e.ontouchend=()=>r.remove(),u.appendChild(e),r.appendChild(u);let o=document.createElement("div"),n=(o.style.cssText=` flex-grow: 1; overflow-y: auto; padding: 5px; background-color: var(--panel-bg); `,r.appendChild(o),document.createElement("button"));n.textContent="Load All Messages",n.style.cssText=` width: 100%; padding: 8px; background-color: var(--panel-border); color: var(--text-color); border: none; cursor: pointer; `,r.appendChild(n),document.body.appendChild(r);e=(()=>{var e=r.getBoundingClientRect(),t=window.innerWidth,o=window.innerHeight;let n,a;return a=c?(n=c.clientX+20,a=c.clientY+20,n+e.width>t&&(n=c.clientX-e.width-20),a+e.height>o&&(a=c.clientY-e.height-20),n=Math.max(0,Math.min(n,t-e.width)),Math.max(0,Math.min(a,o-e.height))):(t=t-e.width-50,o=o-e.height-50,n=Math.random()*Math.max(0,t)+50,Math.random()*Math.max(0,o)+50),{x:n,y:a}})();r.style.left=e.x+"px",r.style.top=e.y+"px";let i=u.offsetHeight,t=!1,a,s,l=(u.onmousedown=e=>{t=!0,a=e.clientX-r.offsetLeft,s=e.clientY-r.offsetTop,e.preventDefault(),document.onmousemove=e=>{t&&(e=v(e.clientX-a,e.clientY-s),r.style.left=e.x+"px",r.style.top=e.y+"px")},document.onmouseup=()=>{t=!1,document.onmousemove=null,document.onmouseup=null}},u.addEventListener("touchstart",e=>{e.preventDefault(),t=!0;e=e.touches[0];a=e.clientX-r.offsetLeft,s=e.clientY-r.offsetTop},{passive:!1}),document.addEventListener("touchmove",e=>{t&&(e.preventDefault(),e=v((e=e.touches[0]).clientX-a,e.clientY-s),r.style.left=e.x+"px",r.style.top=e.y+"px")},{passive:!1}),document.addEventListener("touchend",()=>{t=!1},{passive:!1}),window.addEventListener("resize",()=>{var e=r.getBoundingClientRect(),e=v(e.left,e.top);r.style.left=e.x+"px",r.style.top=e.y+"px"}),0);n.onclick=function(){for(var e=document.createDocumentFragment();l<b;){var t=f();t&&e.appendChild(t),l++}n.remove(),o.appendChild(e)};for(var h=H(),p=document.createDocumentFragment();l<b&&g[l].offset<=h;){var m=f();m&&p.appendChild(m),l++}function v(e,t){var o=r.getBoundingClientRect(),n=window.innerWidth,a=window.innerHeight,n=n-o.width,o=Math.max(0,Math.min(n,e)),n=a-i;return{x:o,y:Math.max(0,Math.min(n,t))}}function f(){var e=g[l],t=e.data.user||e.data["target-user"];if(t&&t.id==d)return Ce(e)}o.appendChild(p),o.scrollTop=o.scrollHeight}}function _e(){var t=prompt("Enter username for chatlog history:");if(t){var o=t.toLowerCase();for(let e=0;e<b;e++){var n=g[e];if(n.data.user&&(n.data.user.login===o||n.data.user["display-name"]===t))return void Xe(n.data.user)}}}function Ke(){var e=document.getElementById("message-borders-style")||document.createElement("style");e.id="message-borders-style",I?e.textContent="":e.textContent=".chat-message { border-bottom: none !important; }",e.parentNode||document.head.appendChild(e)}function qe(){var e=document.getElementById("pinned-bits-style")||document.createElement("style");e.id="pinned-bits-style",A?e.textContent="":e.textContent=".pinned-cheer { display: none !important; }",e.parentNode||document.head.appendChild(e)}function Qe(){let t=document.createElement("div"),a=(t.className="modal",document.createElement("div")),r=(a.className="settings-panel",a.innerHTML=` <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;"><h2 style="margin: 0; color: var(--text-color);">Settings</h2><button id="settings-close" style="background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-color);">&times;</button></div><div style="margin-bottom: 15px;"><label style="display: block; margin-bottom: 5px; font-weight: bold;">Emoji Resolution (1-3): <span id="emote-res-value">${P}</span></label><input type="range" id="emote-res" min="1" max="3" value="${P}" style="width: 100%;"><button id="preload-emotes" style="margin-top: 5px; padding: 5px 10px; background-color: var(--panel-border); border: none; border-radius: 4px; color: var(--text-color); cursor: pointer;">Preload Emotes</button></div><div style="margin-bottom: 15px;"><label style="display: block; margin-bottom: 5px; font-weight: bold;">Bits Resolution (1-4): <span id="bits-res-value">${T}</span></label><input type="range" id="bits-res" min="1" max="4" value="${T}" style="width: 100%;"><button id="preload-bits" style="margin-top: 5px; padding: 5px 10px; background-color: var(--panel-border); border: none; border-radius: 4px; color: var(--text-color); cursor: pointer;">Preload Bits</button></div><div style="margin-bottom: 15px;"><label style="display: block; margin-bottom: 5px; font-weight: bold;">Badges Resolution: <span id="badges-res-value">${x}</span></label><select id="badges-res" style="width: 100%; padding: 5px; background-color: var(--bg-color); border: 1px solid var(--panel-border); color: var(--text-color); border-radius: 4px;"><option value="1" ${1===x?"selected":""}>1x</option><option value="2" ${2===x?"selected":""}>2x</option><option value="4" ${4===x?"selected":""}>4x</option></select><button id="preload-badges" style="margin-top: 5px; padding: 5px 10px; background-color: var(--panel-border); border: none; border-radius: 4px; color: var(--text-color); cursor: pointer;">Preload Badges</button></div><div style="margin-bottom: 15px;"><button id="preload-all" style="width: 100%; padding: 10px; background-color: var(--accent-color); border: none; border-radius: 4px; color: white; cursor: pointer; font-weight: bold;">Preload All Assets</button></div><div style="margin-bottom: 15px;"><label style="display: block; margin-bottom: 5px; font-weight: bold;">Chat History Buffer (50-1000): <span id="history-value">${w}</span></label><input type="range" id="chat-history" min="50" max="1000" step="10" value="${w}" style="width: 100%;"></div><div style="margin-bottom: 15px;"><label style="display: block; margin-bottom: 5px; font-weight: bold;">Chat Update Speed (10-1000ms): <span id="update-speed-value">${f}</span>ms</label><input type="range" id="chat-update-speed" min="10" max="1000" step="10" value="${f}" style="width: 100%;"></div><div style="margin-bottom: 15px;"><label style="display: flex; align-items: center; margin-bottom: 10px;"><input type="checkbox" id="show-timestamps" ${M?"checked":""} style="margin-right: 8px;"> Show message timestamps </label><label style="display: flex; align-items: center; margin-bottom: 10px;"><input type="checkbox" id="show-badges" ${B?"checked":""} style="margin-right: 8px;"> Show user badges </label><label style="display: flex; align-items: center; margin-bottom: 10px;"><input type="checkbox" id="show-sub-messages" ${S?"checked":""} style="margin-right: 8px;"> Show gifted subscriptions, subscription messages </label><label style="display: flex; align-items: center; margin-bottom: 10px;"><input type="checkbox" id="show-ban-messages" ${$?"checked":""} style="margin-right: 8px;"> Show moderation messages </label><label style="display: flex; align-items: center; margin-bottom: 10px;"><input type="checkbox" id="show-message-borders" ${I?"checked":""} style="margin-right: 8px;"> Show message borders </label><label style="display: flex; align-items: center; margin-bottom: 10px;"><input type="checkbox" id="show-pinned-bits" ${A?"checked":""} style="margin-right: 8px;"> Show pinned bits </label></div><div style="display: flex; gap: 10px; margin-top: 20px;"><button id="settings-save" style="flex: 1; padding: 10px; background-color: var(--accent-color); border: none; border-radius: 4px; color: white; cursor: pointer; font-weight: bold;">Save & Close</button><button id="settings-cancel" style="flex: 1; padding: 10px; background-color: var(--panel-border); border: none; border-radius: 4px; color: var(--text-color); cursor: pointer;">Cancel</button></div> `,t.appendChild(a),document.body.appendChild(t),a.querySelector("#emote-res")),e=a.querySelector("#emote-res-value"),i=(r.addEventListener("input",()=>{e.textContent=r.value}),a.querySelector("#bits-res")),o=a.querySelector("#bits-res-value"),s=(i.addEventListener("input",()=>{o.textContent=i.value}),a.querySelector("#badges-res")),n=a.querySelector("#badges-res-value"),l=(s.addEventListener("change",()=>{n.textContent=s.value}),a.querySelector("#chat-history")),c=a.querySelector("#history-value"),d=(l.addEventListener("input",()=>{c.textContent=l.value}),a.querySelector("#chat-update-speed")),u=a.querySelector("#update-speed-value"),h=(d.addEventListener("input",()=>{u.textContent=d.value}),Ae(a,"#preload-emotes",Be),Ae(a,"#preload-bits",Me),Ae(a,"#preload-badges",$e),Ae(a,"#preload-all",Ie),()=>t.remove());a.querySelector("#settings-close").addEventListener("click",h),a.querySelector("#settings-cancel").addEventListener("click",h),t.addEventListener("click",e=>{e.target===t&&h()}),a.querySelector("#settings-save").addEventListener("click",()=>{P=parseInt(r.value),T=parseInt(i.value);var e=parseInt(s.value),t=(w=parseInt(l.value),parseInt(d.value)),o=(M=a.querySelector("#show-timestamps").checked,B=a.querySelector("#show-badges").checked,S=a.querySelector("#show-sub-messages").checked,$=a.querySelector("#show-ban-messages").checked,a.querySelector("#show-message-borders").checked),n=a.querySelector("#show-pinned-bits").checked;x!==e&&(x=e,k=`image${x}x`),t!==f&&(f=t,clearInterval(G),G=setInterval(()=>{v.paused||Ee()},f)),o!==I&&(I=o,Ke()),n!==A&&(A=n,qe()),e={emoteRes:P,bitsRes:T,badgesRes:x,chatHistoryLength:w,chatUpdateInterval:f,showMessageTimestamp:M,showUserBadges:B,showSubMessages:S,showBanMessages:$,showMessageBorders:I,showPinnedBits:A},localStorage.setItem("settings",JSON.stringify(e)),h(),ze()})}function Ye(){o&&o.disconnect(),(o=new MutationObserver(()=>{p.scrollTop=p.scrollHeight,o.disconnect(),o=null})).observe(p,{childList:!0,subtree:!0}),p.scrollTop=p.scrollHeight,setTimeout(()=>{o&&(o.disconnect(),o=null),p.scrollTop=p.scrollHeight},f)}function We(){var e=p.scrollHeight-p.clientHeight<=p.scrollTop+100;n.style.display=e?"none":"block"}function Ze(){var e=Math.floor(v.currentTime),t=new URL(window.location);t.searchParams.set("t",(e=>{var t=3600<e?Math.floor(e/3600):0,o=60<e?Math.floor(e%3600/60):0;let n="";return 0<t&&(n+=t+"h"),(0<o||0<t)&&(n+=o+"m"),n+=e%60+"s"})(e)),window.history.replaceState({},"",t.toString())}function et(){var e=new URL(window.location).searchParams.get("t");e&&(v.currentTime=/^\d+$/.test(e=e)?parseInt(e):3600*((e=e.match(/(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?/))[1]?parseInt(e[1]):0)+60*(e[2]?parseInt(e[2]):0)+(e[3]?parseInt(e[3]):0))}window.addEventListener("keydown",e=>{var t;!v||e.defaultPrevented||(t=e.target)&&("INPUT"===t.tagName||"TEXTAREA"===t.tagName||t.isContentEditable)||e.altKey||e.ctrlKey||e.metaKey||"ArrowLeft"!==e.key&&"ArrowRight"!==e.key||(e.preventDefault(),t="ArrowLeft"===e.key?-1:1,e=Number.isFinite(v.duration)?v.duration:1/0,e=Math.min(e,Math.max(0,(v.currentTime||0)+5*t)),v.currentTime=e)},{capture:!0}),document.addEventListener("DOMContentLoaded",async()=>{document.getElementById("settings-btn").addEventListener("click",Qe),document.getElementById("theme-toggle-btn").addEventListener("click",Ge),document.getElementById("report-btn").addEventListener("click",()=>{window.open("https://github.com/sputchik/sputchik.github.io/issues/new","_blank")}),Re();var e=localStorage.getItem("settings");if(e)try{"emoteRes"in(e=JSON.parse(e))&&(P=e.emoteRes),"bitsRes"in e&&(T=e.bitsRes),"badgesRes"in e&&(x=e.badgesRes),"chatHistoryLength"in e&&(w=e.chatHistoryLength),"chatUpdateInterval"in e&&(f=e.chatUpdateInterval),"showMessageTimestamp"in e&&(M=e.showMessageTimestamp),"showUserBadges"in e&&(B=e.showUserBadges),"showSubMessages"in e&&(S=e.showSubMessages),"showBanMessages"in e&&($=e.showBanMessages),"showMessageBorders"in e&&(I=e.showMessageBorders),"showPinnedBits"in e&&(A=e.showPinnedBits),k=`image${x}x`,Ke(),qe()}catch(e){console.error("Failed to load settings:",e)}await Promise.all([ge(),(async()=>{var e=await R.add(pe.v.h());if(e.errors)throw new z(e.errors);var t=e.badges;let o=t.length;for(;o--;){var n=t[o];u.set(""+n.setID+n.version,n)}})(),(async()=>{var e=await R.add(pe.m.h({channelLogin:a}));if(e.errors)throw new z(e.errors);var t=e.user.broadcastBadges;let o=t.length;for(;o--;){var n=t[o];F.set(""+n.setID+n.version,n)}})(),(async()=>{var e=await R.add(pe.p.h());if(e.errors)throw new z(e.errors);var t=e.cheerConfig.groups[0],o=e.cheerConfig.displayConfig.colors;q=t.templateURL;for(let e=0;e<o.length;e++){var n=o[e];Y.set(n.bits,n.color)}for(let e=0;e<t.nodes.length;e++){var a=t.nodes[e];if("DISPLAY_ONLY"!==a.type){Q.add(a.prefix);var r=new Array;for(let e=0;e<a.tiers.length;e++)r.push(a.tiers[e].bits);var i=a.prefix.toLowerCase();m.set(i,r)}}e=Array.from(Q).join("|"),W=new RegExp(`(?:^|\\s)(${e})(\\d+)(?=\\s|$)`,"gi")})(),(async()=>{if(!Z){var e=await R.add(pe.g.h({channelLogin:a,includeIsDJ:!1}));if(!Z){if(e.errors)throw new z(e.errors);e=e.user.primaryColorHex;e&&ve("#"+e)}}})()]),document.getElementById("chatlog-btn").addEventListener("click",_e),G=setInterval(()=>{v.paused||Ee()},f),v.addEventListener("play",()=>{Oe(),He(),p.scrollHeight-p.clientHeight>=p.scrollTop+100&&Ye(),L.ye()}),v.addEventListener("pause",()=>{Ze(),Oe(),L.xe()}),v.addEventListener("ratechange",()=>{v.paused||(Oe(),He())}),v.addEventListener("seeking",()=>{Oe(),Ve(),Ue(),L.ce()}),v.addEventListener("seeked",()=>{Oe(),Ze(),s=(e=>{if(!b)return 0;let t=0,o=b-1,n=-1;for(;t<=o;){var a=t+o>>1;g[a].offset<=e?(n=a,t=1+a):o=a-1}return Math.max(0,n)})(H()),Ue(),Ve(),ze(),L.ce(),L.ke(),He()}),v.addEventListener("loadedmetadata",()=>{et(),ye()})});</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script>
+	if (!new URLSearchParams(window.location.search).get('id')) window.location.replace('https://archive.org/details/@sputchik?sort=-date');
+	</script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Twitch VOD Viewer</title>
+	<style>
+		:root {
+			/* Light theme colors */
+			--bg-color: #f8f8f8;
+			--scrollbar-bg: #f0f0f0;
+			--scrollbar-thumb: #c1c1c1;
+			--scrollbar-thumb-hover: #a1a1a1;
+			--text-color: #333;
+			--panel-bg: #fff;
+			--panel-border: #ddd;
+			--chat-border: #eee;
+			--timestamp-color: #999;
+			--game-name-color: #555;
+			--resize-handle: #ddd;
+			--resize-handle-hover: #6441a5;
+			--chat-header-bg: #f4f4f4;
+			--viewer-icon-color: #971311;
+			--accent-color: #6741a5;
+			--sub-color: #8b04c1;
+			--cheer-gradient-left: #00000021;
+			--cheer-gradient-right: #00000030;
+			--cheer-clicked-bg: #33333390;
+			--shadow-size-1: 0 1px 2px rgba(0, 0, 0, 0.16),0 0px 2px rgba(0, 0, 0, 0.05);
+			--shadow-size-2: 0 4px 8px rgba(0, 0, 0, 0.16),0 0px 4px rgba(0, 0, 0, 0.05);
+			--btn-hover-bg: #00000020;
+
+		}
+
+		[data-theme="dark"] {
+			--bg-color: #000000;
+			--scrollbar-bg: #000000;
+			--scrollbar-thumb: #222222;
+			--scrollbar-thumb-hover: #6441a5;
+			--text-color: #e5e5e5;
+			--panel-bg: #0f0f0f;
+			--panel-border: #333;
+			--chat-border: #1f1f1f;
+			--timestamp-color: #888;
+			--game-name-color: #aaa;
+			--resize-handle: #333333;
+			--resize-handle-hover: #6441a5;
+			--chat-header-bg: #000000;
+			--viewer-icon-color: #ff6b68;
+			--cheer-gradient-left: #00000029;
+			--cheer-gradient-right: #00000038;
+			--cheer-clicked-bg: #00000090;
+			--btn-hover-bg: #FFFFFF30;
+		}
+
+		* {
+			scrollbar-width: thin;
+			scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-bg);
+		}
+
+		a {
+			color: var(--accent-color);
+			text-decoration: none;
+		}
+
+		a:hover {
+			text-decoration: underline;
+		}
+
+		body {
+			font-family: Arial,sans-serif;
+			font-size: 15px;
+			margin: 0;
+			padding: 0;
+			background: var(--bg-color);
+			color: var(--text-color);
+			overflow-y: hidden;
+		}
+		.container {
+			display: flex;
+			flex-direction: row;
+			max-width: 100%;
+			height: 100dvh;
+		}
+		.left-panel {
+			flex: 1;
+			min-width: 0;
+			padding-left: 10px;
+			padding-right: 10px;
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			overflow-y: auto;
+			scrollbar-gutter: stable both-edges;
+		}
+		.video-container {
+			position: relative;
+			width: 100%;
+			padding-top: 56.25%; /* 16:9 aspect ratio */
+			background: #000;
+		}
+		#video-player {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+		.stream-info {
+			margin-top: 12px;
+			padding: 8px;
+			padding-top: 8px;
+			background: var(--panel-bg);
+			border-radius: 4px;
+			box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+			margin-bottom: 13px;
+		}
+		.stream-info-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 2px;
+		}
+		.stream-title {
+			font-size: 1rem;
+			margin: 0;
+		}
+		.game-name {
+			color: var(--game-name-color);
+			font-size: 0.8rem;
+		}
+		.viewers-count {
+			font-weight: bold;
+			margin-right: 55px;
+			display: flex;
+			align-items: center;
+		}
+		.chat-toggle {
+			background: var(--panel-bg);
+			color: var(--text-color);
+			border: 1px solid var(--panel-border);
+			border-radius: 4px;
+			padding: 8px 15px;
+			cursor: pointer;
+			font-weight: bold;
+		}
+		.description {
+			font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+			font-size: 15px;
+			margin-top: 15px;
+			padding: 15px;
+			background: var(--panel-bg);
+			border-radius: 4px;
+			box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+			overflow-wrap: break-word;
+		}
+		.chat-panel {
+			resize: horizontal;
+			min-width: 200px;
+			width: 400px;
+			background: var(--panel-bg);
+			border-left: 1px solid var(--panel-border);
+			display: flex;
+			flex-direction: column;
+			padding-bottom: env(safe-area-inset-bottom); /* respect iPhone toolbar/safe area */
+			padding-top: env(safe-area-inset-top);
+			position: relative;
+		}
+		.chat-header {
+			padding: 5px 9px;
+			border-bottom: 1px solid var(--panel-border);
+			font-weight: bold;
+			background: var(--chat-header-bg);
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.chat-header-btn {
+			background: none;
+			border: none;
+			cursor: pointer;
+			padding: 4px;
+			border-radius: 4px;
+			color: var(--text-color);
+		}
+		.chat-messages {
+			overflow-y: scroll;
+			padding: 10px;
+			flex: 1;
+			overflow-y: auto;
+		}
+
+		/* New container for events + messages */
+		.chat-messages-panel {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			overflow: hidden;
+			position: relative; /* allow absolute children to overlay */
+		}
+
+		.chat-message {
+			padding: 5px 0;
+			border-bottom: 1px solid var(--chat-border);
+		}
+		.chat-username {
+			font-weight: bold;
+			/* margin-right: 1px; */
+		}
+		.chat-text {
+			word-break: break-word;
+		}
+
+		/* Sample rounded opaque overlay that stacks on top of chat-messages */
+		.chat-overlay {
+			position: absolute;
+			/* distance from the top edge of chat-messages-panel (i.e., chat-messages top) */
+			top: 16px;          /* adjust as needed */
+			left: 12px;
+			right: 12px;
+			background: var(--panel-bg);   /* opaque */
+			border: 1px solid var(--panel-border);
+			border-radius: 10px;
+			padding: 10px 12px;
+			box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+			z-index: 2;         /* above events/messages */
+			pointer-events: auto; /* set to none if you don't want it to block scroll/clicks */
+		}
+
+		.timestamp {
+			color: var(--timestamp-color);
+			font-size: 0.75rem;
+			margin-right: 5px;
+		}
+		.monet, .poll, .prediction {
+			background-color: var(--panel-bg);
+			border-left: 3px solid #6441a5;
+			padding-left: 5px;
+		}
+		.inraid {
+			background-color: #ffad000f;
+			border-left: 3px solid #ff9e27;
+			padding-left: 5px;
+		}
+		.mod {
+			background-color: #ff00000a;
+			border-left: 3px solid #ff0000;
+			padding-left: 5px;
+			font-style: italic;
+		}
+		@media (orientation: portrait) {
+			.container {
+				position: relative;
+				display: grid;
+				/* Only video, info and chat in the grid */
+				grid-template-areas:
+					"video"
+					"info"
+					"chat";
+				grid-template-rows: auto auto 1fr;
+				height: 100dvh; /* Ensure grid fills viewport height */
+			}
+
+			.left-panel {
+				display: contents;
+				height: auto;
+				padding: 10px;
+			}
+
+			.video-container {
+				grid-area: video;
+			}
+
+			.stream-info {
+				grid-area: info;
+				margin-bottom: 0;
+			}
+
+			#chat-panel {
+				grid-area: chat;
+				position: relative;
+				width: 100%;
+				border-left: none;
+				overflow-y: auto;
+				/* Respect safe area inset */
+				padding-bottom: env(safe-area-inset-bottom);
+			}
+
+			/* Position description below the viewport */
+			.description {
+				position: absolute;
+				top: 100dvh;
+				left: 0;
+				right: 0;
+			}
+
+			#resize-handle {
+				display: none; /* Hide the resize handle on mobile */
+			}
+
+			.viewers-count {
+				margin-right: 5px;
+			}
+
+
+		}
+
+		.modal {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.5);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 100;
+		}
+
+		.settings-panel {
+			background: var(--panel-bg);
+			border: 1px solid var(--panel-border);
+			border-radius: 4px;
+			padding: 20px;
+			min-width: 300px;
+			width: 40vw;
+			max-width: 80vw;
+			max-height: 80vh;
+			height: 75%;
+			overflow-y: auto;
+			color: var(--text-color);
+			box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+			z-index: 3;
+		}
+
+		.progress-bar {
+			width: 100%;
+			background: var(--panel-border);
+			border-radius: 4px;
+			margin-top: 5px;
+			padding: 2px;
+			font-size: 12px;
+			text-align: center;
+			color: var(--bg-color);
+			display: none;
+		}
+
+		.popout {
+			position: absolute;
+			top: 100px;
+			left: 100px;
+			width: 350px;
+			height: 400px;
+			max-width: 80vw;
+			max-height: 80vh;
+			background-color: var(--bg-color);
+			border: 1px solid var(--panel-border);
+			border-radius: 4px;
+			z-index: 10;
+			display: flex;
+			flex-direction: column;
+			resize: both;
+			overflow: auto;
+		}
+
+		.scroll-bottom-btn {
+			position: absolute;
+			bottom: 4%;
+			left: 50%;
+			transform: translateX(-50%);
+			display: none;
+			z-index: 3;
+			width: 50%;
+			height: fit-content;
+			min-height: 33px;
+			border-radius: 8px;
+			border-color: var(--panel-border);
+			background-color: var(--bg-color);
+			color: var(--text-color);
+		}
+
+		.event-container {
+			display: flex;
+			flex-direction: column;
+			position: absolute;
+			gap: 10px;
+			top: 10px;
+			left: 11px;
+			right: 15px;
+			z-index: 1;
+		}
+
+		.pin-placeholder {
+			background: var(--panel-bg);
+			display: flex;
+			border-radius: 3px;
+			gap: 10px;
+			box-shadow: var(--shadow-size-2);
+			padding: 8px;
+			justify-content: space-between;
+		}
+
+		.pin-left-container {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+			word-break: break-word;
+			max-width: 90%;
+			min-width: 0;
+		}
+
+		.pinned-bits-container {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+
+		.pinned-bits-placeholder {
+			display: flex;
+			max-width: 100%;
+			gap: 5px;
+			overflow-x: auto;
+			overflow-y: hidden;
+			white-space: nowrap;
+			scrollbar-width: none;
+			touch-action: pan-x;
+			-ms-overflow-style: none;
+		}
+
+		.pinned-bits-placeholder::-webkit-scrollbar {
+			display: none;
+			width: 0;
+			height: 0;
+		}
+
+		.pinned-cheer {
+			min-width: 87px;
+			height: 41px;
+			border-radius: 5px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			position: relative;
+			overflow: hidden;
+			cursor: pointer;
+		}
+
+		.pinned-cheer-inner {
+			background: linear-gradient(to right, var(--cheer-gradient-left), var(--cheer-gradient-right));
+			width: 92%;
+			height: 83%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-radius: 3px;
+			position: absolute;
+			z-index: 0;
+			overflow: hidden;
+		}
+
+		.pinned-bits-details {
+			display: flex;
+			flex-direction: column;
+			/* background set by cheer level */
+			border-radius: 5px;
+			gap: 2px;
+			box-shadow: var(--shadow-size-2);
+		}
+
+		@keyframes pinnedBitsSweep {
+			0% {
+				transform: translateX(-100%);
+			}
+			100% {
+				transform: translateX(0);
+			}
+		}
+
+		.sweep {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			background: var(--cheer-gradient-right);
+			transform: translateX(-100%);
+			z-index: 0;
+		}
+
+		.pinned-cheer-colors-level-one {
+			background: linear-gradient(90deg,#9146ff,#8205b4)
+		}
+
+		.pinned-cheer-colors-level-two {
+			background: linear-gradient(90deg,#578fff,#1e69ff)
+		}
+
+		.pinned-cheer-colors-level-three {
+			background: linear-gradient(90deg,#00bba4,#009919)
+		}
+
+		.pinned-cheer-colors-level-four {
+			background: linear-gradient(90deg,#ffff75,#fdb210,#ff6905)
+		}
+
+		.pinned-cheer-colors-level-five {
+			background: linear-gradient(90deg,#f093f9,#fa1ed2,#f7262c)
+		}
+
+		.pinned-cheer-colors-level-six {
+			background: linear-gradient(90deg,#fa1ed2,#9146ff,#1e69ff,#00c8af)
+		}
+
+		.pinned-cheer-colors-level-seven {
+			background: linear-gradient(90deg,#fafa19,#fdb210,#ea7078,#fa1ed2,#9146ff,#1e69ff)
+		}
+
+		.pinned-cheer-colors-level-eight {
+			background: linear-gradient(90deg,#ffb800,#beff00,#00fafa,#9146ff,#fa1ed2)
+		}
+
+		.btn {
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center; justify-content: center;
+			border-radius: 8px;
+			transition: background .15s, transform .15s;
+			padding: 5px;
+			-webkit-tap-highlight-color: transparent;
+			-webkit-appearance: none;
+		}
+
+		.btn:active {
+			background: var(--btn-hover-bg);
+			border-radius: 8px; transform: scale(1.15);
+		}
+
+		.resize-handle {
+			width: 5px;
+			background-color: var(--resize-handle);
+			cursor: col-resize;
+		}
+
+		.resize-handle:active, .resize-handle.active {
+			transition: background-color 0.2s;
+			background-color: var(--resize-handle-hover);
+		}
+
+		@media (hover: hover) and (pointer: fine) {
+			.btn:hover {
+				background: var(--btn-hover-bg);
+				border-radius: 8px; transform: scale(1.15);
+			}
+
+			.resize-handle:hover {
+				transition: background-color 0.2s;
+				background-color: var(--resize-handle-hover);
+			}
+		}
+
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="left-panel">
+			<div class="video-container">
+				<video id="video-player" webkit-playsinline="true" playsinline="true" controls preload="auto">
+					<!-- Video source will be set dynamically via JavaScript -->
+					Your browser does not support the video tag.
+				</video>
+			</div>
+
+			<div class="stream-info">
+				<div class="stream-info-header">
+					<div>
+						<h1 class="stream-title" id="stream-title">Loading...</h1>
+						<div style="display: flex; align-items: center; gap: 7px; margin-top: 9px;">
+							<svg fill="var(--game-name-color)" width="16" height="16" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg" id="memory-gamepad-center"><path d="M14 1V2H15V7H20V8H21V14H20V15H15V20H14V21H8V20H7V15H2V14H1V8H2V7H7V2H8V1H14M13 8H9V9H8V13H9V14H13V13H14V9H13V8Z" /></svg>
+							<span class="game-name" id="game-name">Loading...</span>
+						</div>
+					</div>
+					<div style="display: flex; align-items: center;">
+						<span class="viewers-count" style="gap: 3px; display: flex; align-items: center; color: var(--viewer-icon-color);">
+							<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+								<path fill="currentColor" fill-rule="evenodd" d="M5 7a5 5 0 1 1 6.192 4.857A2 2 0 0 0 13 13h1a3 3 0 0 1 3 3v2h-2v-2a1 1 0 0 0-1-1h-1a3.99 3.99 0 0 1-3-1.354A3.99 3.99 0 0 1 7 15H6a1 1 0 0 0-1 1v2H3v-2a3 3 0 0 1 3-3h1a2 2 0 0 0 1.808-1.143A5.002 5.002 0 0 1 5 7zm5 3a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" clip-rule="evenodd"></path>
+							</svg>
+							<span id="viewer-count">0</span>
+						</span>
+						<button class="theme-toggle" id="theme-toggle-btn" style="margin-left: 8px; background: var(--panel-bg); color: var(--text-color); border: 1px solid var(--panel-border); border-radius: 4px; padding: 8px 15px; cursor: pointer;">
+							<svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" style="vertical-align: text-bottom;">
+								<path id="moon-icon" fill="currentColor" d="M21.53 15.93c-.16-.27-.61-.69-1.73-.49a8.46 8.46 0 01-1.88.13 8.409 8.409 0 01-5.91-2.82 8.068 8.068 0 01-1.44-8.66c.44-1.01.13-1.54-.09-1.76s-.77-.55-1.83-.11a10.318 10.318 0 00-6.32 10.21 10.475 10.475 0 007.04 8.99 10 10 0 002.89.55c.16.01.32.02.48.02a10.5 10.5 0 008.47-4.27c.67-.93.49-1.519.32-1.79z" style="display: none;"/>
+								<path id="sun-icon" fill="currentColor" d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+							</svg>
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="description" id="description-container" style="display: none;">
+				<details>
+					<summary></summary>
+					<div id="description-content">Loading...</div>
+				</details>
+			</div>
+		</div>
+
+		<div class="resize-handle" id="resize-handle"></div>
+
+		<div class="chat-panel" id="chat-panel">
+			<div class="chat-header">
+				<span>Chat Replay (WIP)</span>
+
+				<div style="display: flex; gap: 5px;" id="chat-header-buttons">
+					<button class="chat-header-btn" title="Found Issue? Report here" id="report-btn">
+						<svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path fill="currentColor" d="M17.416 2.62412C17.7607 2.39435 17.8538 1.9287 17.624 1.58405C17.3943 1.23941 16.9286 1.14628 16.584 1.37604L13.6687 3.31955C13.1527 3.11343 12.5897 3.00006 12.0001 3.00006C11.4105 3.00006 10.8474 3.11345 10.3314 3.31962L7.41603 1.37604C7.07138 1.14628 6.60573 1.23941 6.37596 1.58405C6.1462 1.9287 6.23933 2.39435 6.58397 2.62412L8.9437 4.19727C8.24831 4.84109 7.75664 5.70181 7.57617 6.6719C8.01128 6.55973 8.46749 6.50006 8.93763 6.50006H15.0626C15.5328 6.50006 15.989 6.55973 16.4241 6.6719C16.2436 5.70176 15.7519 4.841 15.0564 4.19717L17.416 2.62412Z"/>
+							<path fill="currentColor" d="M1.25 14.0001C1.25 13.5859 1.58579 13.2501 2 13.2501H5V11.9376C5 11.1019 5.26034 10.327 5.70435 9.68959L3.22141 8.69624C2.83684 8.54238 2.6498 8.10589 2.80366 7.72131C2.95752 7.33673 3.39401 7.1497 3.77859 7.30356L6.91514 8.55841C7.50624 8.20388 8.19807 8.00006 8.9375 8.00006H15.0625C15.8019 8.00006 16.4938 8.20388 17.0849 8.55841L20.2214 7.30356C20.606 7.1497 21.0425 7.33673 21.1963 7.72131C21.3502 8.10589 21.1632 8.54238 20.7786 8.69624L18.2957 9.68959C18.7397 10.327 19 11.1019 19 11.9376V13.2501H22C22.4142 13.2501 22.75 13.5859 22.75 14.0001C22.75 14.4143 22.4142 14.7501 22 14.7501H19V15.0001C19 16.1808 18.7077 17.2932 18.1915 18.2689L20.7786 19.3039C21.1632 19.4578 21.3502 19.8943 21.1963 20.2789C21.0425 20.6634 20.606 20.8505 20.2214 20.6966L17.3288 19.5394C16.1974 20.8664 14.5789 21.7655 12.75 21.9604V15.0001C12.75 14.5858 12.4142 14.2501 12 14.2501C11.5858 14.2501 11.25 14.5858 11.25 15.0001V21.9604C9.42109 21.7655 7.80265 20.8664 6.67115 19.5394L3.77859 20.6966C3.39401 20.8505 2.95752 20.6634 2.80366 20.2789C2.6498 19.8943 2.83684 19.4578 3.22141 19.3039L5.80852 18.2689C5.29231 17.2932 5 16.1808 5 15.0001V14.7501H2C1.58579 14.7501 1.25 14.4143 1.25 14.0001Z"/>
+						</svg>
+					</button>
+
+					<button class="chat-header-btn" title="Open user ChatLog by username" id="chatlog-btn">
+						<svg width="20" height="20" viewBox="0 0 24 24">
+							<path fill="none" d="M18.5 19.5L20 21M11 14C7.13401 14 4 17.134 4 21H11M19 17.5C19 18.8807 17.8807 20 16.5 20C15.1193 20 14 18.8807 14 17.5C14 16.1193 15.1193 15 16.5 15C17.8807 15 19 16.1193 19 17.5ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</button>
+
+					<button class="chat-header-btn" title="Open Settings" id="settings-btn">
+						<svg width="20" height="20" viewBox="0 0 20 20" style="color: var(--text-color)">
+							<path fill="currentColor" d="M10 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path><path fill="currentColor" fill-rule="evenodd" d="M9 2h2a2.01 2.01 0 0 0 1.235 1.855l.53.22a2.01 2.01 0 0 0 2.185-.439l1.414 1.414a2.01 2.01 0 0 0-.439 2.185l.22.53A2.01 2.01 0 0 0 18 9v2a2.01 2.01 0 0 0-1.855 1.235l-.22.53a2.01 2.01 0 0 0 .44 2.185l-1.415 1.414a2.01 2.01 0 0 0-2.184-.439l-.531.22A2.01 2.01 0 0 0 11 18H9a2.01 2.01 0 0 0-1.235-1.854l-.53-.22a2.009 2.009 0 0 0-2.185.438L3.636 14.95a2.009 2.009 0 0 0 .438-2.184l-.22-.531A2.01 2.01 0 0 0 2 11V9c.809 0 1.545-.487 1.854-1.235l.22-.53a2.009 2.009 0 0 0-.438-2.185L5.05 3.636a2.01 2.01 0 0 0 2.185.438l.53-.22A2.01 2.01 0 0 0 9 2zm-4 8 1.464 3.536L10 15l3.535-1.464L15 10l-1.465-3.536L10 5 6.464 6.464 5 10z" clip-rule="evenodd">
+							</path>
+						</svg>
+					</button>
+				</div>
+			</div>
+
+			<div class="chat-messages-panel" id="chat-messages-panel">
+				<div class="event-container" id="event-container">
+					<div class="pinned-bits-container" id="pinned-bits-container">
+						<div class="pinned-bits-placeholder" id="pinned-bits-placeholder">
+						</div>
+					</div>
+
+					<div class="pin-container" id="pin-container">
+					</div>
+
+				</div>
+				<div class="chat-messages" id="chat-messages"></div>
+			</div>
+		</div>
+	</div>
+
+<script>
+		var e=new URLSearchParams(window.location.search),t=e.get("id"),e="true"==e.get("local");t||window.location.replace("https://archive.org/details/@sputchik?sort=-date");let[a,,y]=t.split("-");var t=`https://archive.org/download/${t}/`;let i,l,c,O,v=(O=e?(e=window.location.origin,i=`${e}/${y}.json`,l=`${e}/${y}-metadata.json`,c=`${e}/${y}.mp4`,`${e}/${y}.tar.gz`):(i=t+y+".json",l=t+y+"-metadata.json",c=t+y+".mp4",`https://corsproxy.io/?url=${t}${y}.tar.gz`),document.getElementById("video-player")),h=document.getElementById("chat-panel"),j=document.getElementById("chat-header-buttons"),p=document.getElementById("chat-messages"),V=document.getElementById("viewer-count"),U=document.getElementById("pinned-bits-placeholder"),J=document.getElementById("pinned-bits-container"),G=document.getElementById("pin-container"),X=(U.addEventListener("wheel",e=>{e.preventDefault(),U.scrollLeft+=.3*e.deltaY}),"ontouchstart"in window||0<navigator.maxTouchPoints),_=(v.src=c,e=window.matchMedia("(prefers-color-scheme: dark)").matches,t=localStorage.getItem("theme"),Qe(e||!t?e?"dark":"light":t),window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",e=>{Qe(e.matches?"dark":"light")}),null),r={t:null,viewers:null,o:null},d=null,K=0,q=null,g=[],b=0,Q=!1,s=0,Y=null,W=new Set,m=new Map,Z=new Map,ee=null,te=null,f=100,w=250,ne=5,x=4,k=`image${x}x`,M=!0,$=!0,S=!0,B=!0,I=!1,A=!0,P=3,C=4,u=new Map,z=new Map,oe=new Set,ae=new Set;new Set(["msg","monet","inraid","mod","misc"]);let re=new Map;let ie=["#FF0000","#0000FF","#008000","#B22222","#FF7F50","#9ACD32","#FF4500","#2E8B57","#DAA520","#D2691E","#5F9EA0","#1E90FF","#FF69B4","#8A2BE2","#00FF7F"],se=/(https?:\/\/[^\s]+|www\.[^\s]+)(?![^<]*>)/gi,F={i:'<path fill="currentColor" fill-rule="evenodd" d="M16 6h2v6h-1v6H3v-6H2V6h2V4.793c0-2.507 3.03-3.762 4.803-1.99.131.131.249.275.352.429L10 4.5l.845-1.268a2.81 2.81 0 0 1 .352-.429C12.969 1.031 16 2.286 16 4.793V6zM6 4.793V6h2.596L7.49 4.341A.814.814 0 0 0 6 4.793zm8 0V6h-2.596l1.106-1.659a.814.814 0 0 1 1.49.451zM16 8v2h-5V8h5zm-1 8v-4h-4v4h4zM9 8v2H4V8h5zm0 4H5v4h4v-4z" clip-rule="evenodd"></path>',reply:'<path fill="currentColor" d="M11 8h2v2h-2V8zM9 8H7v2h2V8z"></path><path fill="currentColor" fill-rule="evenodd" d="m10 18-3-3H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2l-3 3zm-2.172-5L10 15.172 12.172 13H15V5H5v8h2.828z" clip-rule="evenodd"></path>',sub:'<path fill="currentColor" d="M8.944 2.654c.406-.872 1.706-.872 2.112 0l1.754 3.77 4.2.583c.932.13 1.318 1.209.664 1.853l-3.128 3.083.755 4.272c.163.92-.876 1.603-1.722 1.132L10 15.354l-3.579 1.993c-.846.47-1.885-.212-1.722-1.132l.755-4.272L2.326 8.86c-.654-.644-.268-1.723.664-1.853l4.2-.583 1.754-3.77z"></path>',l:'<path fill="currentColor" d="M18 5v8a2 2 0 0 1-2 2H4a2.002 2.002 0 0 1-2-2V5l4 3 4-4 4 4 4-3z" fill-rule="evenodd"></path>',u:'<path fill="currentColor" fill-rule="evenodd" d="m11 14 7 4V2l-7 4H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v4h2v-4h3zm1-6.268 4-2.286v9.108l-4-2.286V7.732zM10 12H4V8h6v4z" clip-rule="evenodd"></path>',bits:'<path fill="currentColor" fill-rule="evenodd" d="m3 12 7-10 7 10-7 6-7-6zm2.678-.338L10 5.487l4.322 6.173-.85.728L10 11l-3.473 1.39-.849-.729z" clip-rule="evenodd"></path>',h:'<path fill="currentColor" fill-rule="evenodd" d="M4.941 2h10v2H13v3a3 3 0 0 1 3 3v3H4v-3a3 3 0 0 1 3-3V4H4.941V2zM9 9H7a1 1 0 0 0-1 1v1h8v-1a1 1 0 0 0-1-1h-2V4H9v5z" clip-rule="evenodd"></path><path fill="currentColor" d="M10.999 15h-2v3h2v-3z"></path>',hide:'<path fill="currentColor" d="m16.5 18 1.5-1.5-2.876-2.876a9.99 9.99 0 0 0 1.051-1.191L18 10l-1.825-2.433a9.992 9.992 0 0 0-2.855-2.575 35.993 35.993 0 0 1-.232-.14 6 6 0 0 0-6.175 0 35.993 35.993 0 0 1-.35.211L3.5 2 2 3.5 16.5 18zm-2.79-5.79a8 8 0 0 0 .865-.977L15.5 10l-.924-1.233a7.996 7.996 0 0 0-2.281-2.058 37.22 37.22 0 0 1-.24-.144 4 4 0 0 0-4.034-.044l1.53 1.53a2 2 0 0 1 2.397 2.397l1.762 1.762z" fill-rule="evenodd"></path><path fill="currentColor" d="m11.35 15.85-1.883-1.883a3.996 3.996 0 0 1-1.522-.532 38.552 38.552 0 0 0-.239-.144 7.994 7.994 0 0 1-2.28-2.058L4.5 10l.428-.571L3.5 8 2 10l1.825 2.433a9.992 9.992 0 0 0 2.855 2.575c.077.045.155.092.233.14a6 6 0 0 0 4.437.702z"></path>',p:'<path fill="currentColor" d="M14.5 6.5 10 11 5.5 6.5 4 8l6 6 6-6-1.5-1.5z"></path>',m:'<path fill="currentColor" d="M5.5 13.5 10 9l4.5 4.5L16 12l-6-6-6 6 1.5 1.5z"></path>'},le=new Image;le.src="https://static-cdn.jtvnw.net/subs-image-assets/gift-illus.png";let ce="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",n=null,o=document.createElement("button");function T(e,t=20,n=20,o=20,a=20){var r=document.createElementNS("http://www.w3.org/2000/svg","svg");return r.setAttribute("width",t),r.setAttribute("height",n),r.setAttribute("viewBox",`0 0 ${o} `+a),r.style.color="var(--text-color)",r.style=`min-height: ${n}px; min-width: ${t}px;`,r.innerHTML=e,r}function de(e,t=0){var n=e<0,o=n?-e:e,a=Math.floor(o/3600),r=Math.floor(o%3600/60),o=Math.floor(o%60),n=n?"-":"",a=0<a?n+a.toString().padStart(2,"0")+`:${r.toString().padStart(2,"0")}:`+o.toString().padStart(2,"0"):n+r.toString().padStart(2,"0")+":"+o.toString().padStart(2,"0");return t?a+"."+(e%1).toFixed(t).substring(2):a}o.textContent="▼ Scroll to Bottom",o.className="scroll-bottom-btn",o.addEventListener("click",()=>{p.scrollTop=p.scrollHeight}),h.appendChild(o),p.addEventListener("scroll",at);class ue{constructor(e,t){this.operationName=e,this.sha256Hash=t,this.extensions={persistedQuery:{version:1,sha256Hash:this.sha256Hash}}}v(e={}){return{operationName:this.operationName,extensions:this.extensions,variables:e}}}class he extends ue{constructor(){super("BitsConfigContext_Global","6a265b86f3be1c8d11bdcf32c183e106028c6171e985cc2584d15f7840f5fee6")}}class pe extends ue{constructor(){super("StreamMetadata","b57f9b910f8cd1a4659d894fe7550ccc81ec9052c01e438b290fd66a040b9b93")}}class me extends ue{constructor(){super("ChatList_Badges","838a7e0b47c09cac05f93ff081a9ff4f876b68f7624f0fc465fe30031e372fc2")}}class ve extends ue{constructor(){super("GlobalBadges","9db27e18d61ee393ccfdec8c7d90f14f9a11266298c2e5eb808550b77d7bcdf6")}}let fe=new class{g=new he;k=new me;M=new ve;$=new pe};class L extends Error{constructor(e){super("string"==typeof e?e:JSON.stringify(e)),this.name="RequestError",this.S=e}}let E=new class{constructor(e=30,t=35,n=3e3){this.B=e,this.I=t,this.A=n,this.P=[],this.total=0,this.C=0,this.F=null,this.endpoint="https://gql.twitch.tv/gql",this.headers={"Client-ID":"kimne78kx3ncx6brgo4mv6wki5h1ko","Device-Id":Array(32).fill(0).map(()=>ce.charAt(Math.floor(Math.random()*ce.length))).join(""),"Accept-Language":"en-US"}}async add(t,a=10){for(;0<=a;){let n,o;var e=new Promise((e,t)=>{n=e,o=t}),r=(this.P.push({T:t,resolve:n,reject:o}),this.P.length),i=Date.now();1===r?(this.C=i,this.F=setTimeout(()=>{this.L(),this.B})):(r>=this.I||i-this.C>=this.B)&&(this.F&&(clearTimeout(this.F),this.F=null),this.L());try{return await e}catch(e){if(--a<0)throw r=t.operationName||"unknown",new Error(`Failed to execute operation "${r}" after retries: `+e.message)}}}async L(){if(this.P.length){var n=this.P,t=(this.P=[],this.F&&(clearTimeout(this.F),this.F=null),n.length);this.total+=t;try{console.debug(`Collecting ${t} promises...`);var o=JSON.stringify(n.map(e=>e.T)),a=this.R(o.length),r=Date.now();let e=new AbortController;var i=setTimeout(()=>e.abort(),this.A),s=await fetch(this.endpoint,{method:"POST",headers:{"Content-Type":"application/json",...this.headers},body:o,signal:e.signal});if(clearTimeout(i),!s.ok)throw new Error(`Invalid response status (${s.status})`);var l=await s.text(),c=this.R(l.length),d=JSON.parse(l),u=((Date.now()-r)/1e3).toFixed(2);console.debug(`Collected ${t} promise(s) (${a}) in ${u}s (${c}). Total: `+this.total);for(let e=0;e<n.length;e++){var h,p,m=n[e],v=d[e];v.errors?(h=new L(v.errors),p=m.T.operationName||"Unknown",console.warn(`[${p}] Operation error: `+JSON.stringify(v.errors)),m.reject(h)):m.resolve(v.data||v)}}catch(t){console.error(`Error collecting ${n.length} promises: `+t.message);for(let e=0;e<n.length;e++)n[e].reject(new L(t))}}}R(e){return e<1024?e+" B":e<1048576?(e/1024).toFixed(1)+" KB":(e/1048576).toFixed(1)+" MB"}},ge=new class{constructor(e,t,n=1){this.D=e,this.H=t,this.version=n,this.N=null}async init(){return this.N||new Promise((t,n)=>{if(window.indexedDB){let e=indexedDB.open(this.D,this.version);e.onerror=()=>n(e.error),e.onsuccess=()=>{this.N=e.result,t(this.N)},e.onupgradeneeded=e=>{e=e.target.result;e.objectStoreNames.contains(this.H)||e.createObjectStore(this.H,{keyPath:"id"})}}else n(new Error("IndexedDB not supported"))})}async set(o,a){try{return this.N||await this.init(),new Promise((e,t)=>{let n=this.N.transaction([this.H],"readwrite").objectStore(this.H).put({id:o,data:a,timestamp:Date.now()});n.onerror=()=>t(n.error),n.onsuccess=()=>e(!0)})}catch(e){return console.warn("IndexedDB set failed:",e),!1}}async get(o){return this.N||await this.init(),new Promise((t,e)=>{let n=this.N.transaction([this.H],"readonly").objectStore(this.H).get(o);n.onerror=()=>e(n.error),n.onsuccess=()=>{var e=n.result;t(e?e.data:null)}})}async delete(o){try{return this.N||await this.init(),new Promise((e,t)=>{let n=this.N.transaction([this.H],"readwrite").objectStore(this.H).delete(o);n.onerror=()=>t(n.error),n.onsuccess=()=>e(!0)})}catch(e){return console.warn("IndexedDB delete failed:",e),!1}}async O(){try{return this.N||await this.init(),new Promise((e,t)=>{let n=this.N.transaction([this.H],"readwrite").objectStore(this.H).clear();n.onerror=()=>t(n.error),n.onsuccess=()=>e(!0)})}catch(e){return console.warn("IndexedDB deleteAll failed:",e),!1}}},R=new class{constructor(){this.j=new Map,this.V=new Map,this.U=new Map,this.h=null,this.J=null,this.G=[],this.X=[],this._=null}K(){for(let e=0,t=b;e<t;e++){var n,o=g[e];"pin"===o.type&&"pin-message"===o.data.type&&("CHEER"===(n=o.data.data.message.type)?this.G.push(o.data.data):"MOD"===n&&this.X.push(o.data.data))}}q(e){}Y(e){}W(e){}Z(e){}ee(e){}te(e){}ne(e){}oe(e){}ae(e){}re(){var e=Ve();let t=this.X.length;for(;t--;){var n=this.X[t];if(!(n.message.starts_at>e||e>n.message.ends_at))return this.h&&this.h.id===n.message.id?void 0:void this.ie(n)}}ie(e){var e=e.message,t=e.id,n=e.sender;n["display-name"]=n.display_name,n.badges=Te(n.badges);let o=H(n,n.chat_color,n.badges);var a=e.starts_at,r=e.ends_at,i=r-a;let s=document.createElement("div"),l=(s.className="pin-placeholder",document.createElement("div"));l.className="pin-left-container";var c=document.createElement("div"),d=(c.style="display: flex; align-items: center; gap: 3px;",c.appendChild(T(F.h,16,16,20,20)),document.createElement("span")),u=(d.style="font-weight: 500; font-size: 0.85rem;",De(n.badges)),u=(u.style="margin-left: 6px;",d.textContent="Pinned by",d.appendChild(u),d.appendChild(document.createTextNode(n["display-name"])),c.appendChild(d),l.appendChild(c),D(e.content.text,Fe(e.content),!1));let h=document.createElement("span");h.appendChild(u);for(var p,d=h,m=document.createTreeWalker(d,NodeFilter.SHOW_TEXT,null),v=[];m.nextNode();)v.push(m.currentNode);for(p of v){let i=p.nodeValue;if(se.test(i)){se.lastIndex=0;let a=document.createDocumentFragment(),r=0;i.replace(se,(e,t,n)=>{n>r&&a.appendChild(document.createTextNode(i.slice(r,n)));var o=document.createElement("a");return o.textContent=e,o.href=e.startsWith("http")?e:"https://"+e,o.target="_blank",o.rel="noopener noreferrer",a.appendChild(o),r=n+e.length,e}),r<i.length&&a.appendChild(document.createTextNode(i.slice(r))),p.replaceWith(a)}}l.appendChild(h),l.appendChild(o);c=document.createElement("div"),c.style="display: flex; gap: 5px; margin-right: 6px;",e=T(F.hide,18,18,20,20),e.setAttribute("class","btn"),u=document.createElementNS("http://www.w3.org/2000/svg","title");u.textContent="Hide Pinned message",e.insertBefore(u,e.firstChild),c.appendChild(e);let f=T(F.m,18,18,20,20),g=(f.setAttribute("class","btn"),document.createElementNS("http://www.w3.org/2000/svg","title")),b=(g.textContent="Collapse",document.createElementNS("http://www.w3.org/2000/svg","title"));function w(){s.style.display="none";let e=document.createElement("button");e.className="chat-header-btn",e.title="Show Pinned message",e.appendChild(T(F.h)),e.onclick=()=>{s.style.display="flex",e.remove(),R._=null},R._?R._.replaceWith(e):j.prepend(e),R._=e}function x(){f.innerHTML=T(F.p,18,18,20,20).innerHTML,h.style="word-break: break-word; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;",o.style.display="none",f.onclick=y,f.insertBefore(b,f.firstChild)}function y(){l.style.overflow="visible",h.style="",o.style.display="",f.innerHTML=T(F.m,18,18,20,20).innerHTML,f.onclick=x,f.insertBefore(g,f.firstChild)}b.textContent="Expand",f.insertBefore(g,f.firstChild),c.appendChild(f),e.onclick=w,this._&&w(),f.onclick=x,s.appendChild(l),s.appendChild(c),G.innerHTML="",G.appendChild(s),this.h={id:t,se:a,le:r,duration:i,sender:n}}ce(e){}de(e){this.h&&this.h.id===e&&(this.h=null,G.innerHTML="")}ue(){var n=Ve();for(let e=0,t=this.G.length;e<t;e++){var o=this.G[e];o.message.starts_at>n||n>o.message.ends_at||this.j.has(o.message.id)||this.he(o)}}pe(){var n,o,a,e=N(),r=d.createdUnix+e;for(let[e,t]of this.j)t.se>r||t.le<r?this.me(e):(n=t.duration,0<(o=t.le-r)?(clearTimeout(t.ve),a=n-o,t.fe.style.animation=`pinnedBitsSweep ${n}s linear forwards`,t.fe.style.animationDelay=`-${a}s`,t.ve=setTimeout(()=>{this.me(e)},1e3*o)):this.me(e))}he(e){var t,n,o,a,r,i,s,l,c,d,u,h,p,e=e.message;let m=e.id;this.j.has(m)||(t=e.sender,p=Ve(),n=e.starts_at,(a=e.ends_at)<p)||(p=(o=a-n)-(a=a-p),r=e.metadata.bitsAmount,i=e.metadata.level,h=1e3<=r?Math.floor(r/1e3)+"K":r.toString(),d=t.display_name.slice(0,2),u=T(F.bits,20,20,20,20),(s=document.createElement("div")).className="pinned-cheer pinned-cheer-colors-level-"+i.toLowerCase(),(l=document.createElement("div")).className="pinned-cheer-inner",(c=document.createElement("div")).className="sweep",c.style.animation=`pinnedBitsSweep ${o}s linear forwards`,c.style.animationPlayState=v.paused?"paused":"running",c.style.animationDelay=`-${p}s`,s.appendChild(c),(p=document.createElement("span")).style="color: white; font-weight: 700; display: flex; vertical-align: middle; align-items: center; gap: 1px; position: relative; z-index: 1;",p.appendChild(document.createTextNode(d)),p.appendChild(u),p.appendChild(document.createTextNode(""+h)),l.appendChild(p),s.appendChild(l),U.prepend(s),d=Fe(e.content),u=D(e.content.text,d,!0),(h=document.createElement("div")).appendChild(u),p=h.innerHTML,t.badges=Te(t.badges),t["display-name"]=t.display_name,s.onclick=()=>this.ge(m),s.title=t["display-name"]+" "+r,this.j.set(m,{element:s,fe:c,be:r,level:i,se:n,le:e.ends_at,duration:o,ve:setTimeout(()=>{this.me(m)},1e3*a),we:p,sender:t}))}me(e){var t=this.j.get(e);t&&(t.element.remove(),this.j.delete(e))}ge(e){let t=this.j.get(e);if(!t)return;if(this.J){if(this.J.id===e)return;this.J.close()}let n=document.createElement("div");n.className="pinned-bits-details pinned-cheer-colors-level-"+t.level.toLowerCase();var o=H(t.sender,t.sender.chat_color,t.sender.badges),a=document.createElement("div"),r=document.createElement("div");r.appendChild(o),r.style="display: flex; justify-content: space-between; align-items: center; gap: 10px;",r.appendChild(o);let i=document.createElement("span"),s=(i.style="font-size: 0.85rem; font-weight: 700; color: var(--text-color);",r.appendChild(i),de(t.duration));function l(){var e=t.le-Ve();e<=0?(i.textContent="00:00",clearInterval(c)):(e=de(e),i.textContent=e,i.title=e+" / "+s)}l();let c=setInterval(l,1e3);a.appendChild(r),a.style="margin: 3px; display: flex; flex-direction: column; gap: 7px; background: var(--panel-bg); border-radius: 5px; padding: 10px;";o=document.createElement("span"),o.className="chat-text",o.innerHTML=t.we,a.appendChild(o),n.appendChild(a),r=document.createElement("div"),r.style="margin-left: 6px; gap: 1px; display: flex; align-items: center; vertical-align: middle; margin-bottom: 3px; color: black",r.appendChild(T(F.bits,22,22,20,20)),o=document.createElement("span");o.style="font-weight: 700;",o.textContent=t.be.toString(),r.appendChild(o),n.appendChild(r),J.appendChild(n);let d=t.element.childNodes[1],u=(d.dataset.xe=d.style.background,d.style.background="var(--cheer-clicked-bg)",()=>{d.style.background=d.dataset.xe,n.remove(),R.J=null,t.element.onclick=()=>this.ge(e)});n.onclick=e=>{u()},this.J={ye:n,id:e,close:u},t.element.onclick=()=>u()}ke(){if(this.j)for(var[e,t]of this.j)t.fe.style.animationPlayState="paused",clearTimeout(t.ve)}Me(){if(this.j){this.pe();for(var[e,t]of this.j)t.fe.style.animationPlayState="running"}}$e(){this.ue(),this.re()}};function be(e){te=e;var t=document.createElement("style");t.id="channel-color-style",t.textContent=`.chat-message.monet { border-left-color: ${e} !important; }`,t.parentNode||document.head.appendChild(t)}async function we(t){try{var n=t.stream(),o=new DecompressionStream("gzip"),a=n.pipeThrough(o),r=await new Response(a).arrayBuffer(),i=new Uint8Array(r),s={};let e=0;for(;e+512<=i.byteLength;){var l=i.slice(e,e+512);if(l.every(e=>0===e))break;var c=l.slice(0,100);let t="";for(let e=0;e<c.length&&0!==c[e];e++)t+=String.fromCharCode(c[e]);var d=String.fromCharCode(l[156]),u=l.slice(124,136);let n="";for(let e=0;e<u.length&&0!==u[e];e++)n+=String.fromCharCode(u[e]);var h=parseInt(n.trim()||"0",8);if(console.log("TAR entry:",t,"type:",d,"size:",h),"0"!==d&&"\0"!==d||t.includes("PaxHeader")){var p=Math.ceil(h/512);e+=512+512*p}else{if(0<h&&(t.endsWith(".json")||t.endsWith("-metadata.json"))){var m=e+512,v=i.slice(m,m+h);try{var f=new TextDecoder("utf-8").decode(v),g=JSON.parse(f);s[t]=g,console.log("Extracted:",t,"size:",E.R(h))}catch(e){console.warn("Failed to parse JSON for",t,":",e)}}var b=Math.ceil(h/512);e+=512+512*b}}var w=y+"-metadata.json",x=y+".json";return(console.log("Available files:",Object.keys(s)),s[w]&&s[x])?(console.log("Successfully extracted both metadata and chat log"),[s[w],s[x]]):(console.warn("Target files not found"),null)}catch(e){return console.error("Failed to parse compressed chat log:",e),null}}async function xe(){if(!Q){console.log("Looking for cached chat for stream:",y);var t=async()=>{console.log("Falling back to uncompressed chat log...");var e=fetch(l).then(e=>e.json()).then(e=>{d=e,q=e.owner,qe(),Ke()}),[,e]=await Promise.all([e,fetch(i)]);g=await e.json()},e=await ge.get(y);if(e instanceof Blob)[d,g]=await we(e),console.log("Chat loaded from IndexedDB cache");else{console.log("No cached chat found, trying compressed chat log first...");try{var n,o,a=await fetch(O);200===a.status&&(o=await we(n=await a.blob()))instanceof Array?([d,g]=o,await ge.set(y,n),console.log("Chat cached in IndexedDB for future use")):await t()}catch(e){console.warn("Failed to fetch compressed chat log:",e),await t()}if(!Array.isArray(g))return void console.error("Failed to load chat log from any source")}Q=!0,b=g.length,console.log("Chat loaded with",b,"messages"),q=d.owner,qe(),Ke(),d.accentColor&&be(d.accentColor),K=d.videoOffset||0,R.K()}}function ye(e){return`https://static-cdn.jtvnw.net/emoticons/v2/${e}/default/dark/${P}.0`}function ke(t){if(t&&t.length){let e=t.length;for(;e--;)(e=>{var t;oe.has(e)||(oe.add(e),(t=new Image).src=ye(e),t.onerror=()=>{console.warn("Failed to load emote:",e),oe.delete(e)})})(t[e].id)}}function Me(t){if(t&&t.length){let e=t.length;for(;e--;){var n=t[e];(e=>{var t,n;ae.has(e)||((t=z.get(e)||u.get(e))?((n=new Image).src=t[k],n.onerror=()=>{console.warn("Failed to load badge:",e)},n.onload=()=>{ae.add(e)}):console.warn("Unknown badge ID:",e))})(""+n.name+n.value)}}}function $e(){if(Q){var t=g[s].offset+ne;let e=s;for(;e<b&&g[e].offset<t;){var n=g[e];ke(n.data.emotes),Me(n.data.badges),n.data.user&&!n.data.color&&(n=n.data.user.login,re.has(n)||Ee(n)),e++}}}function Se(e,t,n,o,a){let r={PREFIX:e.toLowerCase(),BACKGROUND:t,ANIMATION:n?"animated":"static",TIER:o,SCALE:a,EXTENSION:n?"gif":"png"};return Y.replace(/\b(PREFIX|BACKGROUND|ANIMATION|TIER|SCALE|EXTENSION)\b/g,e=>r[e])}function Be(a=null){if(null===Y)console.warn("Bits template URL not set");else{let n=0,o=0;for(var[,e]of m.entries())n+=e.length;a&&a(o,n);for(var[r,i]of m.entries()){let t=i.length;for(;t--;){var s=i[t];let e=Se(r,"dark",!0,s,C);s=new Image;s.onload=()=>{o++,a&&a(o,n)},s.onerror=()=>{console.warn("Failed to preload bits image:",e),o++,a&&a(o,n)},s.src=e}}}}function Ie(e=null){var n,t=Array.from(u.values()),o=Array.from(z.values());let a=t.length+o.length,r=0,i=(e&&e(r,a),()=>{r++,e&&e(r,a)});for(n of[t,o]){let t=n.length;for(;t--;){var s=n[t];let e=""+s.setID+s.version;var l=new Image;l.onload=i,l.onerror=()=>{console.warn("Failed to preload badge:",e),i()},l.src=s[k]}}}function Ae(){var t=new Set;let e=g.length;for(;e--;){var n=g[e].data.emotes;if(n){let e=n.length;for(;e--;)t.add(n[e].id)}}return t}function Pe(t=null){var n=Ae();let o=n.size,a=0;t&&t(a,o);for(let e of n){var r=new Image;r.onload=()=>{a++,t&&t(a,o)},r.onerror=()=>{console.warn("Failed to preload emote:",e),a++,t&&t(a,o)},r.src=ye(e)}}function Ce(t=null){let e,n,o=0,a=0,r=0,i=0;var s,l;e=Ae().size,n=u.size+z.size;for([s,l]of m.entries())o+=l.length;let c=e+n+o,d=()=>{var e=a+r+i;t&&t(e,c)};Pe((e,t)=>{a=e,d()}),Ie((e,t)=>{r=e,d()}),Be((e,t)=>{i=e,d()})}function ze(e,t,n){e.querySelector(t).addEventListener("click",function(){let i=this;var e;i.dataset.originalColor=i.style.color||"",i.style.color="#FFFFFF",(e=i).disabled=!0,e.dataset.originalText=e.textContent,e.dataset.originalBackground=e.style.backgroundColor||"",n((e,t)=>{var n,o,a,r;n=i,r=e,a=0<(o=t)?Math.round(r/o*100):0,n.textContent=r+`/${o} (${a}%)`,n.style.background=`linear-gradient(to right, var(--accent-color, #9147ff) ${a}%, var(--panel-border) ${a}%)`,t<=e&&((r=i).disabled=!1,r.style.backgroundImage="",r.textContent=r.dataset.originalText,r.style.backgroundColor=r.dataset.originalBackground||"var(--panel-border)",r.style.color=r.dataset.originalColor||"var(--text-color)")})})}function Fe(e){var n=new Map;let o=0;var t=e.text,a=e.fragments,r=Le(t);for(let e=0,t=a.length;e<t;e++){var i=a[e],s=o;if(o+=i.text.length,i.emoticon){var l=i.emoticon.emoticonID;let e;n.has(l)?e=n.get(l):(e={id:l,len:i.text.length,pos:[]},n.set(l,e)),e.pos.push(r[s])}}return Array.from(n.values())}function Te(t){if(!t||!t.length)return[];if(void 0!==t[0].name)return t;var n=t.length,o=new Array(n);for(let e=0;e<n;e++){var a=t[e];o[e]={name:a.id,value:a.version}}return o}function Le(e){var t,n=[0];let o=0;for(t of e)o+=t.length,n.push(o);return n}function D(o,e,t=!1){if(!(e&&e.length||t))return document.createTextNode(o);var n,a=[];if(e){let n=Le(o);a.push(...e.flatMap(t=>t.pos.map(e=>({Se:!1,start:n[e],end:n[e+t.len],id:t.id}))))}if(t&&ee)for(ee.lastIndex=0;null!==(n=ee.exec(o));)a.push({Se:!0,start:n.index,end:n.index+n[0].length,Be:n[1],be:parseInt(n[2],10)});a.sort((e,t)=>e.start-t.start);var r=document.createDocumentFragment();let i=0;for(let e=0,t=a.length;e<t;e++){var s=a[e],l=(s.start>i&&(l=o.substring(i,s.start),r.appendChild(document.createTextNode(l))),document.createElement("img"));if(l.onerror=function(){this.replaceWith(document.createTextNode(this.alt))},s.Se){var c=m.get(s.Be.toLowerCase());let t=1;if(c){let e=c.length;for(;e--;)if(s.be>=c[e]){t=c[e];break}}var d=document.createElement("span"),u=(d.className="bits-container",d.style="display: inline-flex; align-items: center; vertical-align: middle; gap: 4px; margin-left: 2px; margin-right: 2px;",l.src=Se(s.Be,"dark",!0,t,C),l.title=l.alt=""+s.Be+s.be,l.style="height: 1.6rem; width: auto; vertical-align: middle;",document.createElement("span"));u.textContent=s.be.toString(),u.style=`font-weight: bold; color: ${Z.get(t)};`,d.appendChild(l),d.appendChild(u),r.appendChild(d)}else l.src=ye(s.id),l.title=l.alt=o.substring(s.start,s.end),l.style.cssText="height: 1.6rem; width: auto; vertical-align: middle;",r.appendChild(l);i=s.end}return i<o.length&&(e=o.substring(i),r.appendChild(document.createTextNode(e))),r}function Ee(e){var t=e.toString().split("").reduce((e,t)=>(e<<5)-e+t.charCodeAt(0)|0,0),t=Math.abs(t)%ie.length,t=ie[t];return re.set(e,t),t}function Re(e){return re.get(e)||Ee(e)}function De(e){var t,n=document.createElement("span");n.style="margin-right: 4px;";for(t of e){var o,a=""+t.name+t.value,r=z.get(a)||u.get(a);r?((o=document.createElement("img")).src=r[k],o.style="height: 1.0rem; width: auto; vertical-align: middle; margin-right: 4px;",o.title=o.alt=r.title,n.appendChild(o)):console.warn("Badge not found: "+a)}return n}function H(t,e,n=null){var o=document.createElement("span"),a=(o.className="chat-username",t.login||t["display-name"]),e=e||Re(a);return o.style=`color: ${e}; cursor: pointer;`,o.textContent=t["display-name"]||a,o.onclick=e=>We(t,e),B&&n&&n.length?(e=document.createElement("span"),a=De(n),e.appendChild(a),e.appendChild(o),e):o}function He(e){var t,n=e.type,o=e.data,a=document.createElement("div");a.className="chat-message "+n,a.id=o.id||0,M&&((t=document.createElement("span")).className="timestamp",t.textContent=de(e.offset-K),a.appendChild(t));let r,i;switch(n){case"msg":i=H(o.user,o.color,o.badges);var s=document.createElement("span");if(s.className="chat-text",s.textContent=": ","reply"===(r=o["msg-id"])){var l=T(F.reply,18,18,20,20),c=(l.style.color="var(--timestamp-color)",document.createElement("div")),l=(c.style="display: flex; gap: 5px; margin-bottom: 2px; align-items: center;",c.appendChild(l),o.reply["parent-msg-body"]),d=o.reply["parent-display-name"],l=`Replying to @${d}: `+l;let n=o.reply["parent-msg-id"];var u=document.createElement("a"),l=(u.onclick=e=>{e.preventDefault();let t=p.querySelector(`.chat-message[id="${n}"]`);t&&(t.scrollIntoView(),t.style.backgroundColor="rgba(255,255,0,0.3)",setTimeout(()=>t.style.backgroundColor="",200))},u.textContent=l,u.style="color: var(--timestamp-color);",c.appendChild(u),a.appendChild(c),D(o.text,o.emotes)),u=(s.appendChild(l),`@${d} `),c=s.childNodes[1];return c&&c.nodeType===Node.TEXT_NODE&&c.nodeValue.startsWith(u)&&(c.nodeValue=c.nodeValue.slice(u.length)),a.appendChild(i),a.appendChild(s),a}s.appendChild(D(o.text,o.emotes)),a.appendChild(i),a.appendChild(s);break;case"monet":if("bits"===(r=o["msg-id"])){a.className="chat-message msg";l=document.createElement("span"),d=(l.className="chat-text",l.textContent=": ",D(o.text,o.emotes,!0));l.appendChild(d),a.appendChild(H(o.user,o.color,o.badges)),a.appendChild(l)}else{if(!S)return;i=H(o.user,"var(--sub-color)",null);var c=o.user["display-name"]||o.user.login,u=document.createElement("span");u.className="chat-text",u.style.fontSize="0.9rem";let n=o["system-msg"];if(n.startsWith(c)&&(n=n.substring(c.length).trimStart()),"resub"===r||"sub"===r)return n.startsWith("subscribed")&&(n=n.charAt(0).toUpperCase()+n.slice(1)),u.textContent=" "+n,(s=document.createElement("div")).style="display: flex; flex-direction: column; gap: 2px;",d=document.createElement("div"),(c=T((l="Prime"===o["msg-params"]["sub-plan"])?F.l:F.sub,20,20)).style.color=l?"var(--sub-color)":"var(--game-name-color)",d.style="display: flex; align-items: center; gap: 4px;",u.style.marginLeft="24px",d.appendChild(c),d.appendChild(i),s.appendChild(d),s.appendChild(u),a.appendChild(s),o.text&&((l=document.createElement("div")).style.marginTop="8px",(c=document.createElement("span")).className="chat-text",c.textContent=": ",d=D(o.text,o.emotes),c.appendChild(d),l.appendChild(H(o.user,o.color,o.badges)),l.appendChild(c),a.appendChild(l)),a;if("submysterygift"===r||"subgift"===r){u.textContent=" "+n;var s=document.createElement("div"),d=(s.style="display: flex; align-items: center; gap: 3px;",i.style.fontWeight="bold",document.createElement("div")),c=document.createElement("span");c.className="chat-text";let e=o["system-msg"];l=o.user["display-name"]||o.user.login;e.startsWith(l)&&(e=e.substring(l.length).trimStart()),c.textContent=" "+e,c.style.fontSize="0.9rem";let t;return"submysterygift"===r?((t=document.createElement("img")).src=le.src,t.style="height: 45px; width: auto;",i.style.color=o.color||Re(o.user.login),d.style="display: flex; flex-direction: column;"):(t=T(F.i),i.style.color="var(--text-color)",d.style.marginLeft="4px"),d.appendChild(i),d.appendChild(c),s.appendChild(t),s.appendChild(d),a.appendChild(s),a}u.textContent=" "+n,a.appendChild(i),a.appendChild(u),o.text&&((l=document.createElement("div")).style.marginTop="4px",c=H(o.user,o.color,o.badges),(d=document.createElement("span")).className="chat-text",d.textContent=": ",s=D(o.text,o.emotes),d.appendChild(s),l.appendChild(c),l.appendChild(d),a.appendChild(l))}break;case"inraid":i=H(o.user,"#ff8b38",o.badges);u=document.createElement("span");u.className="chat-text",u.textContent=` is raiding with a party of ${o["msg-params"].viewerCount} viewers`,a.appendChild(i),a.appendChild(u);break;case"mod":if(!$)return;s=document.createElement("span");if(s.className="chat-text","ban"===o["msg-id"])i=H(o["target-user"],"var(--text-color)",null),a.appendChild(i),s.style.color="var(--text-color)",s.textContent=" was banned",o["ban-duration"]&&(s.textContent+=` for ${o["ban-duration"]} seconds`);else if("clear-msg"===o["msg-id"]){let t=p.querySelector(`.chat-message[id="${o["target-msg-id"]}"]`);if(!t)return;c=t.querySelector(".chat-text"),d=(c&&(c.style.opacity="0.7"),document.createElement("a"));d.href="#"+t.id,d.textContent="message deleted",d.style="cursor: pointer; margin-left: 5px; color: #999;",d.addEventListener("click",e=>{e.preventDefault(),t.scrollIntoView(),t.style.backgroundColor="rgba(255,255,0,0.3)",setTimeout(()=>t.style.backgroundColor="",200)}),s.appendChild(d)}else s.textContent="Moderation action";a.appendChild(s);break;case"poll":case"prediction":l=document.createElement("div");l.style.fontWeight="bold",l.textContent=n.charAt(0).toUpperCase()+n.slice(1)+": ","poll"===n&&o.data&&o.data.poll?l.textContent+=o.data.poll.title||"":"prediction"===n&&o.data&&o.data.event&&(l.textContent+=o.data.event.title||""),a.appendChild(l);break;case"pin":return A&&"pin-message"===o.type&&"CHEER"===o.data.message.type?void R.he(o.data):void 0;default:u=document.createElement("span");u.className="chat-text",u.textContent=`[${n}] Event`,a.appendChild(u)}return a}function Ne(){if(Q&&b){var e=N();let t=s;for(;t<g.length&&g[t].offset<=e;)t++;if(t>s){var n=document.createDocumentFragment();for(let e=s;e<t;e++){var o=He(g[e]);o&&n.appendChild(o)}var a,r=p.scrollHeight-p.clientHeight<=p.scrollTop+100,i=(p.appendChild(n),s=t,p.children);i.length>w&&((a=document.createRange()).setStart(p,0),a.setEnd(p,i.length-w),a.deleteContents()),(r?ot:at)()}}}function Oe(){s=s>=w?s-w:0,p.innerHTML="",Ne()}function je(){let n=document.querySelector(".container"),o=document.getElementById("resize-handle"),a,r,i,s=!1;var e;function t(e){s=!0;var t=e.touches[0];a=t.clientX,r=h.offsetWidth,i=n.offsetWidth,document.addEventListener("touchmove",c,{passive:!1}),document.addEventListener("touchend",u),document.addEventListener("touchcancel",u),o.classList.add("active"),document.body.style.userSelect="none",e.preventDefault()}function l(e){s&&(e=e.clientX-a,e=Math.max(200,Math.min(i-200,r-e)),h.style.width=e+"px")}function c(e){var t;s&&(t=e.touches[0].clientX-a,t=Math.max(200,Math.min(i-200,r-t)),h.style.width=t+"px",e.preventDefault())}function d(){s&&(s=!1,document.removeEventListener("mousemove",l),document.removeEventListener("mouseup",d),o.classList.remove("active"),document.body.style.userSelect="",ot())}function u(){s&&(s=!1,document.removeEventListener("touchmove",c),document.removeEventListener("touchend",u),document.removeEventListener("touchcancel",u),o.classList.remove("active"),document.body.style.userSelect="",ot())}X&&((e=document.createElement("div")).style.cssText=`
+					position: absolute;
+					top: -15px;
+					bottom: -15px;
+					left: -15px;
+					right: -15px;
+					z-index: 1;
+					touch-action: none;
+				`,o.style.position="relative",o.appendChild(e),e.addEventListener("touchstart",t,{passive:!1})),o.addEventListener("mousedown",function(e){s=!0,a=e.clientX,r=h.offsetWidth,i=n.offsetWidth,document.addEventListener("mousemove",l),document.addEventListener("mouseup",d),o.classList.add("active"),document.body.style.userSelect="none",e.preventDefault()}),o.addEventListener("touchstart",t,{passive:!1})}function N(){return K+v.currentTime}function Ve(){return d.createdUnix+N()}function Ue(){var e,t;v.paused||(t=(t=>{let n=1/0;var o=d.titles,a=d.games;if(o&&o.length)for(let e=0;e<o.length;e++){var[r,,]=o[e];t<r&&r<n&&(n=r)}if(a&&a.length)for(let e=0;e<a.length;e++){var[i,,]=a[e];t<i&&i<n&&(n=i)}return n===1/0?null:n})(e=N()),r.t&&(clearTimeout(r.t),r.t=null),t&&(t=1e3*(t-e)/v.playbackRate+50,r.t=setTimeout(()=>{qe(),Ue()},t)))}function Je(){if(!v.paused){var n,o,a=N();o=a;let[e,t]=(n=d.viewers)&&n.length?0<=(o=_e(o))&&o<n.length-1?[o+1,n[o+1][0]]:[0,n[0][0]]:null;r.viewers&&(clearTimeout(r.viewers),r.viewers=null),t&&(o=1e3*(t-a)/v.playbackRate,r.viewers=setTimeout(()=>{Ke(index=e),Je()},o))}}function Ge(){Ue(),Je(),function e(){v.paused||(r.o&&(clearTimeout(r.o),r.o=null),r.o=setTimeout(()=>{$e(),e()},800*ne))}()}function Xe(){for(var e in r)r[e]&&(clearTimeout(r[e]),r[e]=null)}function _e(n){var o=d.viewers;if(!o.length||n<o[0][0])return-1;var a,r,e=Math.floor(n/30),i=Math.max(0,e-3),s=Math.min(o.length-1,e+3);let l=-1,c=-1;for(let e=i;e<=s;e++){var[t,,]=o[e];t<=n&&t>c&&(c=t,l=e)}if(-1===l)for(let e=0,t=o.length;e<t;e++)e>=i&&e<=s||([a,r]=o[e],a<=n&&a>c&&(c=a,l=e));return l}function Ke(e=null){e=e||_e(N()),e=0<=e?d.viewers[e][1]:0;V.textContent=e.toLocaleString()}function qe(){var n=Math.ceil(N()),o=d.titles,a=d.games;if(o&&o.length){let t=o[0][1];for(let e=o.length-1;0<=e;e--){var[r,i]=o[e];if(r<=n){t=i;break}}document.querySelector(".stream-title").textContent=t,document.title=t+" - "+q.displayName}if(a&&a.length){let t=a[0][1]||"";for(let e=a.length-1;0<=e;e--){var[s,l]=a[e];if(s<=n){t="object"==typeof l?l.name:l;break}}document.getElementById("game-name").textContent=t}}function Qe(e){document.documentElement.setAttribute("data-theme",e),localStorage.setItem("theme",e),document.getElementById("moon-icon").style.display="light"===e?"none":"block",document.getElementById("sun-icon").style.display="light"===e?"block":"none"}function Ye(){Qe("light"===(localStorage.getItem("theme")||"light")?"dark":"light")}function We(e,c=null){let d=e.id.toString();var e=e["display-name"]||e.login,u=document.getElementById("user-chat-window-"+d);if(!u){let r=document.createElement("div");r.id="user-chat-window-"+d,r.className="popout";u=document.createElement("div"),e=(u.style.cssText=`
+				padding: 5px;
+				cursor: move;
+				background-color: var(--panel-border);
+				color: var(--text-color);
+				border-bottom: 1px solid var(--panel-border);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				z-index: 11;
+			`,u.textContent="Chat History for "+e,document.createElement("button"));e.textContent="X",e.style.cssText=`
+				background: none;
+				border: none;
+				color: var(--text-color);
+				cursor: pointer;
+				padding: 0 5px;
+			`,e.onmousedown=e=>e.stopPropagation(),e.ontouchstart=e=>e.stopPropagation(),e.onclick=()=>r.remove(),e.ontouchend=()=>r.remove(),u.appendChild(e),r.appendChild(u);let n=document.createElement("div"),o=(n.style.cssText=`
+				flex-grow: 1;
+				overflow-y: auto;
+				padding: 5px;
+				background-color: var(--panel-bg);
+			`,r.appendChild(n),document.createElement("button"));o.textContent="Load All Messages",o.style.cssText=`
+				width: 100%;
+				padding: 8px;
+				background-color: var(--panel-border);
+				color: var(--text-color);
+				border: none;
+				cursor: pointer;
+			`,r.appendChild(o),document.body.appendChild(r);e=(()=>{var e=r.getBoundingClientRect(),t=window.innerWidth,n=window.innerHeight;let o,a;return a=c?(o=c.clientX+20,a=c.clientY+20,o+e.width>t&&(o=c.clientX-e.width-20),a+e.height>n&&(a=c.clientY-e.height-20),o=Math.max(0,Math.min(o,t-e.width)),Math.max(0,Math.min(a,n-e.height))):(t=t-e.width-50,n=n-e.height-50,o=Math.random()*Math.max(0,t)+50,Math.random()*Math.max(0,n)+50),{x:o,y:a}})();r.style.left=e.x+"px",r.style.top=e.y+"px";let i=u.offsetHeight,t=!1,a,s,l=(u.onmousedown=e=>{t=!0,a=e.clientX-r.offsetLeft,s=e.clientY-r.offsetTop,e.preventDefault(),document.onmousemove=e=>{t&&(e=v(e.clientX-a,e.clientY-s),r.style.left=e.x+"px",r.style.top=e.y+"px")},document.onmouseup=()=>{t=!1,document.onmousemove=null,document.onmouseup=null}},u.addEventListener("touchstart",e=>{e.preventDefault(),t=!0;e=e.touches[0];a=e.clientX-r.offsetLeft,s=e.clientY-r.offsetTop},{passive:!1}),document.addEventListener("touchmove",e=>{t&&(e.preventDefault(),e=v((e=e.touches[0]).clientX-a,e.clientY-s),r.style.left=e.x+"px",r.style.top=e.y+"px")},{passive:!1}),document.addEventListener("touchend",()=>{t=!1},{passive:!1}),window.addEventListener("resize",()=>{var e=r.getBoundingClientRect(),e=v(e.left,e.top);r.style.left=e.x+"px",r.style.top=e.y+"px"}),0);o.onclick=function(){for(var e=document.createDocumentFragment();l<b;){var t=f();t&&e.appendChild(t),l++}o.remove(),n.appendChild(e)};for(var h=N(),p=document.createDocumentFragment();l<b&&g[l].offset<=h;){var m=f();m&&p.appendChild(m),l++}function v(e,t){var n=r.getBoundingClientRect(),o=window.innerWidth,a=window.innerHeight,o=o-n.width,n=Math.max(0,Math.min(o,e)),o=a-i;return{x:n,y:Math.max(0,Math.min(o,t))}}function f(){var e=g[l],t=e.data.user||e.data["target-user"];if(t&&t.id==d)return He(e)}n.appendChild(p),n.scrollTop=n.scrollHeight}}function Ze(){var t=prompt("Enter username for chatlog history:");if(t){var n=t.toLowerCase();for(let e=0;e<b;e++){var o=g[e];if(o.data.user&&(o.data.user.login===n||o.data.user["display-name"]===t))return void We(o.data.user)}}}function et(){var e=document.getElementById("message-borders-style")||document.createElement("style");e.id="message-borders-style",I?e.textContent="":e.textContent=".chat-message { border-bottom: none !important; }",e.parentNode||document.head.appendChild(e)}function tt(){var e=document.getElementById("pinned-bits-style")||document.createElement("style");e.id="pinned-bits-style",A?e.textContent="":e.textContent=".pinned-cheer { display: none !important; }",e.parentNode||document.head.appendChild(e)}function nt(){let t=document.createElement("div"),a=(t.className="modal",document.createElement("div")),r=(a.className="settings-panel",a.innerHTML=`
+		<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+			<h2 style="margin: 0; color: var(--text-color);">Settings</h2>
+			<button id="settings-close" style="background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-color);">&times;</button>
+		</div>
+		<div style="margin-bottom: 15px;">
+			<label style="display: block; margin-bottom: 5px; font-weight: bold;">Emoji Resolution (1-3): <span id="emote-res-value">${P}</span></label>
+			<input type="range" id="emote-res" min="1" max="3" value="${P}" style="width: 100%;">
+			<button id="preload-emotes" style="margin-top: 5px; padding: 5px 10px; background-color: var(--panel-border); border: none; border-radius: 4px; color: var(--text-color); cursor: pointer;">Preload Emotes</button>
+		</div>
+		<div style="margin-bottom: 15px;">
+			<label style="display: block; margin-bottom: 5px; font-weight: bold;">Bits Resolution (1-4): <span id="bits-res-value">${C}</span></label>
+			<input type="range" id="bits-res" min="1" max="4" value="${C}" style="width: 100%;">
+			<button id="preload-bits" style="margin-top: 5px; padding: 5px 10px; background-color: var(--panel-border); border: none; border-radius: 4px; color: var(--text-color); cursor: pointer;">Preload Bits</button>
+		</div>
+		<div style="margin-bottom: 15px;">
+			<label style="display: block; margin-bottom: 5px; font-weight: bold;">Badges Resolution: <span id="badges-res-value">${x}</span></label>
+			<select id="badges-res" style="width: 100%; padding: 5px; background-color: var(--bg-color); border: 1px solid var(--panel-border); color: var(--text-color); border-radius: 4px;">
+				<option value="1" ${1===x?"selected":""}>1x</option>
+				<option value="2" ${2===x?"selected":""}>2x</option>
+				<option value="4" ${4===x?"selected":""}>4x</option>
+			</select>
+			<button id="preload-badges" style="margin-top: 5px; padding: 5px 10px; background-color: var(--panel-border); border: none; border-radius: 4px; color: var(--text-color); cursor: pointer;">Preload Badges</button>
+		</div>
+		<div style="margin-bottom: 15px;">
+			<button id="preload-all" style="width: 100%; padding: 10px; background-color: var(--accent-color); border: none; border-radius: 4px; color: white; cursor: pointer; font-weight: bold;">Preload All Assets</button>
+		</div>
+		<div style="margin-bottom: 15px;">
+			<label style="display: block; margin-bottom: 5px; font-weight: bold;">Chat History Buffer (50-1000): <span id="history-value">${w}</span></label>
+			<input type="range" id="chat-history" min="50" max="1000" step="10" value="${w}" style="width: 100%;">
+		</div>
+		<div style="margin-bottom: 15px;">
+			<label style="display: block; margin-bottom: 5px; font-weight: bold;">Chat Update Speed (10-1000ms): <span id="update-speed-value">${f}</span>ms</label>
+			<input type="range" id="chat-update-speed" min="10" max="1000" step="10" value="${f}" style="width: 100%;">
+		</div>
+		<div style="margin-bottom: 15px;">
+			<label style="display: flex; align-items: center; margin-bottom: 10px;">
+				<input type="checkbox" id="show-timestamps" ${M?"checked":""} style="margin-right: 8px;">
+				Show message timestamps
+			</label>
+			<label style="display: flex; align-items: center; margin-bottom: 10px;">
+				<input type="checkbox" id="show-badges" ${B?"checked":""} style="margin-right: 8px;">
+				Show user badges
+			</label>
+			<label style="display: flex; align-items: center; margin-bottom: 10px;">
+				<input type="checkbox" id="show-sub-messages" ${S?"checked":""} style="margin-right: 8px;">
+				Show gifted subscriptions, subscription messages
+			</label>
+			<label style="display: flex; align-items: center; margin-bottom: 10px;">
+				<input type="checkbox" id="show-ban-messages" ${$?"checked":""} style="margin-right: 8px;">
+				Show moderation messages
+			</label>
+			<label style="display: flex; align-items: center; margin-bottom: 10px;">
+				<input type="checkbox" id="show-message-borders" ${I?"checked":""} style="margin-right: 8px;">
+				Show message borders
+			</label>
+			<label style="display: flex; align-items: center; margin-bottom: 10px;">
+				<input type="checkbox" id="show-pinned-bits" ${A?"checked":""} style="margin-right: 8px;">
+				Show pinned bits
+			</label>
+		</div>
+		<div style="display: flex; gap: 10px; margin-top: 20px;">
+			<button id="settings-save" style="flex: 1; padding: 10px; background-color: var(--accent-color); border: none; border-radius: 4px; color: white; cursor: pointer; font-weight: bold;">Save & Close</button>
+			<button id="settings-cancel" style="flex: 1; padding: 10px; background-color: var(--panel-border); border: none; border-radius: 4px; color: var(--text-color); cursor: pointer;">Cancel</button>
+		</div>
+			`,t.appendChild(a),document.body.appendChild(t),a.querySelector("#emote-res")),e=a.querySelector("#emote-res-value"),i=(r.addEventListener("input",()=>{e.textContent=r.value}),a.querySelector("#bits-res")),n=a.querySelector("#bits-res-value"),s=(i.addEventListener("input",()=>{n.textContent=i.value}),a.querySelector("#badges-res")),o=a.querySelector("#badges-res-value"),l=(s.addEventListener("change",()=>{o.textContent=s.value}),a.querySelector("#chat-history")),c=a.querySelector("#history-value"),d=(l.addEventListener("input",()=>{c.textContent=l.value}),a.querySelector("#chat-update-speed")),u=a.querySelector("#update-speed-value"),h=(d.addEventListener("input",()=>{u.textContent=d.value}),ze(a,"#preload-emotes",Pe),ze(a,"#preload-bits",Be),ze(a,"#preload-badges",Ie),ze(a,"#preload-all",Ce),()=>t.remove());a.querySelector("#settings-close").addEventListener("click",h),a.querySelector("#settings-cancel").addEventListener("click",h),t.addEventListener("click",e=>{e.target===t&&h()}),a.querySelector("#settings-save").addEventListener("click",()=>{P=parseInt(r.value),C=parseInt(i.value);var e=parseInt(s.value),t=(w=parseInt(l.value),parseInt(d.value)),n=(M=a.querySelector("#show-timestamps").checked,B=a.querySelector("#show-badges").checked,S=a.querySelector("#show-sub-messages").checked,$=a.querySelector("#show-ban-messages").checked,a.querySelector("#show-message-borders").checked),o=a.querySelector("#show-pinned-bits").checked;x!==e&&(x=e,k=`image${x}x`),t!==f&&(f=t,clearInterval(_),_=setInterval(()=>{v.paused||Ne()},f)),n!==I&&(I=n,et()),o!==A&&(A=o,tt()),e={emoteRes:P,bitsRes:C,badgesRes:x,chatHistoryLength:w,chatUpdateInterval:f,showMessageTimestamp:M,showUserBadges:B,showSubMessages:S,showBanMessages:$,showMessageBorders:I,showPinnedBits:A},localStorage.setItem("settings",JSON.stringify(e)),h(),Oe()})}function ot(){n&&n.disconnect(),(n=new MutationObserver(()=>{p.scrollTop=p.scrollHeight,n.disconnect(),n=null})).observe(p,{childList:!0,subtree:!0}),p.scrollTop=p.scrollHeight,setTimeout(()=>{n&&(n.disconnect(),n=null),p.scrollTop=p.scrollHeight},f)}function at(){var e=p.scrollHeight-p.clientHeight<=p.scrollTop+100;o.style.display=e?"none":"block"}function rt(){var e=Math.floor(v.currentTime),t=new URL(window.location);t.searchParams.set("t",(e=>{var t=3600<e?Math.floor(e/3600):0,n=60<e?Math.floor(e%3600/60):0;let o="";return 0<t&&(o+=t+"h"),(0<n||0<t)&&(o+=n+"m"),o+=e%60+"s"})(e)),window.history.replaceState({},"",t.toString())}function it(){var e=new URL(window.location).searchParams.get("t");e&&(v.currentTime=/^\d+$/.test(e=e)?parseInt(e):3600*((e=e.match(/(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?/))[1]?parseInt(e[1]):0)+60*(e[2]?parseInt(e[2]):0)+(e[3]?parseInt(e[3]):0))}window.addEventListener("keydown",e=>{var t;!v||e.defaultPrevented||(t=e.target)&&("INPUT"===t.tagName||"TEXTAREA"===t.tagName||t.isContentEditable)||e.altKey||e.ctrlKey||e.metaKey||"ArrowLeft"!==e.key&&"ArrowRight"!==e.key||(e.preventDefault(),t="ArrowLeft"===e.key?-1:1,e=Number.isFinite(v.duration)?v.duration:1/0,e=Math.min(e,Math.max(0,(v.currentTime||0)+5*t)),v.currentTime=e)},{capture:!0}),document.addEventListener("DOMContentLoaded",async()=>{document.getElementById("settings-btn").addEventListener("click",nt),document.getElementById("theme-toggle-btn").addEventListener("click",Ye),document.getElementById("report-btn").addEventListener("click",()=>{window.open("https://github.com/sputchik/sputchik.github.io/issues/new","_blank")}),je();var e=localStorage.getItem("settings");if(e)try{"emoteRes"in(e=JSON.parse(e))&&(P=e.emoteRes),"bitsRes"in e&&(C=e.bitsRes),"badgesRes"in e&&(x=e.badgesRes),"chatHistoryLength"in e&&(w=e.chatHistoryLength),"chatUpdateInterval"in e&&(f=e.chatUpdateInterval),"showMessageTimestamp"in e&&(M=e.showMessageTimestamp),"showUserBadges"in e&&(B=e.showUserBadges),"showSubMessages"in e&&(S=e.showSubMessages),"showBanMessages"in e&&($=e.showBanMessages),"showMessageBorders"in e&&(I=e.showMessageBorders),"showPinnedBits"in e&&(A=e.showPinnedBits),k=`image${x}x`,et(),tt()}catch(e){console.error("Failed to load settings:",e)}await Promise.all([xe(),(async()=>{var e=await E.add(fe.M.v());if(e.errors)throw new L(e.errors);var t=e.badges;let n=t.length;for(;n--;){var o=t[n];u.set(""+o.setID+o.version,o)}})(),(async()=>{var e=await E.add(fe.k.v({channelLogin:a}));if(e.errors)throw new L(e.errors);var t=e.user.broadcastBadges;let n=t.length;for(;n--;){var o=t[n];z.set(""+o.setID+o.version,o)}})(),(async()=>{var e=await E.add(fe.g.v());if(e.errors)throw new L(e.errors);var t=e.cheerConfig.groups[0],n=e.cheerConfig.displayConfig.colors;Y=t.templateURL;for(let e=0;e<n.length;e++){var o=n[e];Z.set(o.bits,o.color)}for(let e=0;e<t.nodes.length;e++){var a=t.nodes[e];if("DISPLAY_ONLY"!==a.type){W.add(a.prefix);var r=new Array;for(let e=0;e<a.tiers.length;e++)r.push(a.tiers[e].bits);var i=a.prefix.toLowerCase();m.set(i,r)}}e=Array.from(W).join("|"),ee=new RegExp(`(?:^|\\s)(${e})(\\d+)(?=\\s|$)`,"gi")})(),(async()=>{if(!te){var e=await E.add(fe.$.v({channelLogin:a,includeIsDJ:!1}));if(!te){if(e.errors)throw new L(e.errors);e=e.user.primaryColorHex;e&&be("#"+e)}}})()]),document.getElementById("chatlog-btn").addEventListener("click",Ze),_=setInterval(()=>{v.paused||Ne()},f),v.addEventListener("play",()=>{Xe(),Ge(),p.scrollHeight-p.clientHeight>=p.scrollTop+100&&ot(),R.Me()}),v.addEventListener("pause",()=>{rt(),Xe(),R.ke()}),v.addEventListener("ratechange",()=>{v.paused||(Xe(),Ge())}),v.addEventListener("seeking",()=>{Xe(),qe(),Ke(),R.pe()}),v.addEventListener("seeked",()=>{Xe(),rt(),s=(e=>{if(!b)return 0;let t=0,n=b-1,o=-1;for(;t<=n;){var a=t+n>>1;g[a].offset<=e?(o=a,t=1+a):n=a-1}return Math.max(0,o)})(N()),Ke(),qe(),Oe(),R.pe(),R.$e(),Ge()}),v.addEventListener("loadedmetadata",()=>{it(),$e(),R.$e()})});
+</script>
+</body>
+</html>
