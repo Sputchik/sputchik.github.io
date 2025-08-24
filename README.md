@@ -7,6 +7,7 @@
 - Highly customizable Chat Settings
 - Resizable chat panel
 - Pinned bits, messages
+- Polls
 
 ### Current Message features:
 - Emotes, Bits (all types)
@@ -16,8 +17,7 @@
 - Replies
 - Raiders
 
-### Work-In-Progress (Mostly chat events):
-- Polls
+### Work-In-Progress:
 - Predictions
 
 - Description + Modern stream timelapse
