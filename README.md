@@ -16,6 +16,7 @@
 - Moderation: user bans, deleted messages
 - Replies
 - Raiders
+- 1st Time chatters (returning chatters / monitored only show if you a mod or channel owner)
 
 ### Work-In-Progress:
 - Predictions
