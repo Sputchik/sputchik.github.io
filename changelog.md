@@ -1,3 +1,11 @@
+# 0.13.7, 2025-09-10
+- Revised recording to un-breakingly handle unstable streamers (since a long time ago)
+- More aggressive ad segment handling (test)
+- pre-0.14.0
+
+# 0.13.6, 2025-09-09
+- Better stat chart downscaling
+
 # 0.13.5, 2025-09-07
 - Video recording can now "blazingly" fast handle short streams (< 3-5s)
 - 2K (1440p60) recording support
