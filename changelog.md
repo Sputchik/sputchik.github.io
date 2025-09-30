@@ -1,3 +1,6 @@
+# 0.14.0, 2025-09-29
+- Added game slug parsing for metadata
+
 # 0.13.7, 2025-09-10
 - Revised recording to un-breakingly handle unstable streamers (since a long time ago)
 - More aggressive ad segment handling (test)
