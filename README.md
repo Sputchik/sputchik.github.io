@@ -20,5 +20,5 @@
 
 ### Work-In-Progress:
 - Predictions
-
+- Highlighted messages, announcements, ...
 - Description + Modern stream timelapse
