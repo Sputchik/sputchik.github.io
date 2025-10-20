@@ -1,5 +1,9 @@
+# 0.14.1, 2025-10-18
+- Fixed offset for first chat messages
+
 # 0.14.0, 2025-09-29
-- Added game slug parsing for metadata
+- Added game slug parsing for stream metadata
+- Moved Predictions & Polls below charts
 
 # 0.13.7, 2025-09-10
 - Revised recording to un-breakingly handle unstable streamers (since a long time ago)

@@ -17,8 +17,9 @@
 - Replies
 - Raiders
 - 1st Time chatters (returning chatters / monitored only show if you a mod or channel owner)
+- Highlighted messages, Viewer milestones
 
 ### Work-In-Progress:
 - Predictions
-- Highlighted messages, announcements, ...
+- Announcements, ...
 - Description + Modern stream timelapse
