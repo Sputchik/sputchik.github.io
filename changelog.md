@@ -1,3 +1,7 @@
+# 0.15.0
+- Tweaked chart generation (grid/outline w/ colors)
+- Titles and Games are now clickable in archive.org description (to player with offset)
+
 # 0.14.1, 2025-10-18
 - Fixed offset for first chat messages
 
