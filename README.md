@@ -8,6 +8,7 @@
 - Resizable chat panel
 - Pinned bits, messages
 - Polls
+- Games, Titles seekers
 
 ### Current Message features:
 - Emotes, Bits (all types)
@@ -20,6 +21,7 @@
 - Highlighted messages, Viewer milestones
 
 ### Work-In-Progress:
+- Landing Page
 - Predictions
 - Announcements, ...
 - Description + Modern stream timelapse
