@@ -1,4 +1,4 @@
-# Early-stage chat replayer
+# Early-stage chat replayer - Report issues if found!
 
 ### Current features:
 - Adaptive Stream Title/Game
@@ -9,6 +9,7 @@
 - Pinned bits, messages
 - Polls
 - Games, Titles seekers
+- Predictions
 
 ### Current Message features:
 - Emotes, Bits (all types)
@@ -22,6 +23,4 @@
 
 ### Work-In-Progress:
 - Landing Page
-- Predictions
 - Announcements, ...
-- Description + Modern stream timelapse
