@@ -31,3 +31,4 @@
 - Adapt old code for newly added functions for less size & repetitiveness
 - Refactor Settings
 - Add `Load More` button to prediction summary which will go through every prediction message and add every top predictor
+- Prediction details resizing layout
