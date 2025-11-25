@@ -1,3 +1,6 @@
+# 0.16.0
+- Adapt to twitch's v2 HLS API
+
 # 0.15.0
 - Tweaked chart generation (grid/outline w/ colors)
 - Titles and Games are now clickable in archive.org description (to player with offset)
