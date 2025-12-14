@@ -37,3 +37,8 @@
 
 # 0.13.2
 - Rewrote stream video recording function to skip ad segments (enhanced < 0.10.0 version)
+
+### Technical details
+- Simultaneous recording user limit (ignoring download bandwidth limit / no video recording) per IP: 5,000 (200 * 25)
+
+- Simultaneous minimal recording limit (stream up/down & title/game changes) per IP: 15,000 (200 * 75)
