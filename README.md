@@ -6,11 +6,7 @@
 - User ChatLog pop-ups - Either click on username in chat panel, or find by username / display name clicking button in chat panel header
 - Highly customizable Chat Settings
 - Resizable chat panel
-- Pinned bits, messages
-- Polls
 - Games, Titles seekers
-- Predictions
-- Announcements
 
 ### Current Message features:
 - Emotes, Bits (all types)
@@ -19,8 +15,12 @@
 - Moderation: user bans, deleted messages
 - Replies
 - Raiders
+- Pinned bits, messages
 - 1st Time chatters (returning chatters / monitored only show if you a mod or channel owner)
 - Highlighted messages, Viewer milestones
+- Polls
+- Predictions
+- Announcements
 
 ### Work-In-Progress (User):
 - Bits Highlighted Messages
