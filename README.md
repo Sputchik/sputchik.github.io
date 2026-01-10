@@ -1,5 +1,3 @@
-# Early-stage chat replayer - Report issues if found!
-
 ### Current features:
 - Adaptive Stream Title/Game
 - Optimal Chat Replayer
@@ -7,6 +5,7 @@
 - Highly customizable Chat Settings
 - Resizable chat panel
 - Games, Titles seekers
+- Play Next Stream
 
 ### Current Message features:
 - Emotes, Bits (all types)
@@ -24,11 +23,8 @@
 
 ### Work-In-Progress (User):
 - Bits Highlighted Messages
-- Play Next Stream
 
 ### Work-In-Progress (Dev):
 - Classify message render function
-- Adapt old code for newly added functions for less size & repetitiveness
 - Refactor Settings
 - Add `Load More` button to prediction summary which will go through every prediction message and add every top predictor
-- Prediction details resizing layout
