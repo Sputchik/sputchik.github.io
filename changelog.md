@@ -1,3 +1,8 @@
+# 0.16.1
+- More ticks on Y-axis charts (viewers/chat activity)
+- Chat Activity is not quantized anymore (best quality at cost of size)
+- All PNGs are now compressed using best algorithm
+
 # 0.16.0
 - Adapt to twitch's v2 HLS API
 
