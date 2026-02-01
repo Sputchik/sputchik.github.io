@@ -19,10 +19,12 @@
 - Highlighted messages, Viewer milestones
 - Polls
 - Predictions
-- Announcements
+- Announcement
 
 ### Work-In-Progress (User):
 - Bits Highlighted Messages
+- Bits badge notification
+- Anonymous & single gift sub noti fix
 
 ### Work-In-Progress (Dev):
 - Classify message render function
