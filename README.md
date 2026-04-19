@@ -18,12 +18,14 @@
 - 1st Time chatters (returning chatters / monitored only show if you a mod or channel owner)
 - Highlighted messages, Viewer milestones
 - Polls
-- Predictions
+- Predictions (+ Multi Choice)
 - Announcements
 
 ### Work-In-Progress (User):
 - Bits Highlighted Messages
 - Bits badge notification
+- Event Log button (bug button replacement)
+- Quick vote stats when clicking prediction event window
 
 ### Work-In-Progress (Dev):
 - Classify message render function
