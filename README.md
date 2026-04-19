@@ -18,16 +18,10 @@
 - 1st Time chatters (returning chatters / monitored only show if you a mod or channel owner)
 - Highlighted messages, Viewer milestones
 - Polls
-- Predictions (+ Multi Choice)
+- Predictions (+ Multi Choice & Quick Stats)
 - Announcements
+- Event Log
 
 ### Work-In-Progress (User):
-- Bits Highlighted Messages
-- Bits badge notification
-- Event Log button (bug button replacement)
-- Quick vote stats when clicking prediction event window
-
-### Work-In-Progress (Dev):
-- Classify message render function
-- Refactor Settings
 - Add `Load More` button to prediction summary which will go through every prediction message and add every top predictor
+- Refactor Settings
