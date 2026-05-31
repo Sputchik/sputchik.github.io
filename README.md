@@ -23,5 +23,5 @@
 - Event Log
 
 ### Work-In-Progress (User):
-- Add `Load More` button to prediction summary which will go through every prediction message and add every top predictor
+- Add filter button for chat for messages: VIP/Mod/Verified/Staff-only, User(s)-specific only
 - Refactor Settings
