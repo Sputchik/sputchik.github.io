@@ -24,4 +24,3 @@
 
 ### Work-In-Progress (User):
 - Add filter button for chat for messages: VIP/Mod/Verified/Staff-only, User(s)-specific only
-- Refactor Settings
